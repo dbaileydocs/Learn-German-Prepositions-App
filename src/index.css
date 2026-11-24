@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Literata", Georgia, serif;
+  --font-sans: "Nunito Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --bg-canvas: #f2f7f3;
+    --bg-surface: #ffffff;
+    --bg-surface-tinted: #e6f0e8;
+    --bg-surface-hover: #d7e7da;
+    --ink-primary: #1e2d24;
+    --ink-secondary: #4a5e51;
+    --border-hairline: #cde0d1;
+    --accent-primary: #2e6b47;
+    --accent-primary-hover: #245538;
+    --accent-container: #d8efe0;
+    --accent-container-ink: #19472c;
+    --info-container: #e2eff7;
+    --info-ink: #1b4965;
+    --warm-container: #f5e2c4;
+    --warm-ink: #5f3a12;
+    --error-solid: #b63835;
+    --error-container: #fce8e7;
+    --error-ink: #7c1f1d;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--ink-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgb(46 107 71 / 0.22);
+  }
+}
+
+/* 3D Flashcard flip utilities */
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

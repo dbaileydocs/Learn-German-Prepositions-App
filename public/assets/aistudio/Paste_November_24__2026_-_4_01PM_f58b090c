@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="canopy">
+  <title>Deutsche Präpositionen — Interactive Practice &amp; Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,500;0,7..72,600;1,7..72,500&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Clean green-tinted visual theme with soft green accents */
+      --background: #f2f7f3;
+      --surface-container-low: #ffffff;
+      --surface-container: #e6f0e8;
+      --surface-container-high: #d7e7da;
+
+      /* Ink */
+      --on-surface: #1e2d24;
+      --on-surface-variant: #4a5e51;
+
+      /* Lines */
+      --outline: #8ba594;
+      --outline-variant: #cde0d1;
+
+      /* Soft green accents */
+      --primary: #2e6b47;
+      --primary-hover: #245538;
+      --on-primary: #ffffff;
+      --primary-container: #d8efe0;
+      --on-primary-container: #19472c;
+      --secondary: #4e6b58;
+      --tertiary: #845424;
+      --tertiary-container: #f5e2c4;
+      --on-tertiary-container: #5f3a12;
+      --info-container: #e2eff7;
+      --on-info-container: #1b4965;
+      --error: #b63835;
+      --error-container: #fce8e7;
+      --on-error-container: #7c1f1d;
+      --on-error: #ffffff;
+
+      /* Semantic & focus */
+      --positive: #2e6b47;
+      --warning: #845424;
+      --focus: #2e6b47;
+
+      /* Fonts */
+      --font-headline: 'Literata', serif;
+      --font-body: 'Nunito Sans', sans-serif;
+      --font-label: 'Geist Mono', monospace;
+
+      /* Type scale (Focused Tool) */
+      --display-size: clamp(1.75rem, 1.35rem + 1.4vw, 2.35rem);
+      --headline-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.55rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+
+      /* Shape & effects */
+      --rounded: 0.625rem;
+      --rounded-lg: 1rem;
+      --rounded-full: 9999px;
+      --shadow-soft: 0 4px 18px rgb(30 45 36 / 0.06);
+      --shadow-soft-hover: 0 8px 24px rgb(30 45 36 / 0.10);
+      --border-crisp: 1px solid var(--outline-variant);
+      --border-strong: 1.5px solid var(--outline);
+      --focus-ring: 0 0 0 3px rgb(46 107 71 / 0.25);
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 3.5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 380ms;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+
+    button, input, select {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+      box-shadow: var(--focus-ring);
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Header & KPI Strip */
+    .app-header {
+      background: var(--surface-container-low);
+      border: var(--border-crisp);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: center;
+    }
+
+    .kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin: 0 0 var(--space-xs) 0;
+    }
+
+    h1 {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-surface);
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--on-surface-variant);
+      max-width: 60ch;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    .kpi-tile {
+      background: var(--surface-container);
+      border: var(--border-crisp);
+      border-radius: var(--rounded);
+      padding: var(--space-md) var(--space-sm);
+      text-align: center;
+    }
+    .kpi-tile.is-highlight {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    .kpi-label {
+      display: block;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--on-surface-variant);
+      margin-bottom: var(--space-xs);
+    }
+    .kpi-tile.is-highlight .kpi-label {
+      color: var(--on-primary-container);
+    }
+
+    .kpi-value {
+      font-family: var(--font-headline);
+      font-size: clamp(1.35rem, 1.1rem + 0.7vw, 1.75rem);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.1;
+    }
+
+    /* Mode Switcher & Workspace Navigation */
+    .workspace-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      background: var(--surface-container-low);
+      border: var(--border-crisp);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-sm) var(--space-md);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .mode-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: var(--border-crisp);
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  transform var(--dur-micro) var(--ease-out),
+                  box-shadow var(--dur-micro) var(--ease-out);
+      text-decoration: none;
+    }
+    .btn:hover:not(:disabled) {
+      background: var(--surface-container-high);
+      transform: translateY(-1px);
+    }
+    .btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-hover);
+      color: var(--on-primary);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--outline-variant);
+    }
+
+    .btn-sm {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      font-size: 0.875rem;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--surface-container-low);
+      border: var(--border-crisp);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 600;
+      margin: 0;
+      color: var(--on-surface);
+    }
+
+    h3 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 600;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-surface);
+    }
+
+    /* Quiz Controls Row */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+      gap: var(--space-md);
+      align-items: end;
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: var(--border-crisp);
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .field-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--on-surface-variant);
+    }
+
+    select.control-input {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg) var(--space-sm) var(--space-md);
+      border: var(--border-crisp);
+      border-radius: var(--rounded);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Quiz Stage */
+    .quiz-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded-full);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      background: var(--surface-container);
+      color: var(--on-surface);
+    }
+    .pill-akk {
+      background: var(--info-container);
+      color: var(--on-info-container);
+    }
+    .pill-dat {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .pill-wech {
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: var(--surface-container);
+      border-radius: var(--rounded-full);
+      overflow: hidden;
+      margin-bottom: var(--space-lg);
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: var(--rounded-full);
+      transition: width var(--dur-short) var(--ease-out);
+      width: 0%;
+    }
+
+    .prompt-box {
+      background: var(--background);
+      border: var(--border-crisp);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl) var(--space-lg);
+      margin-bottom: var(--space-lg);
+      text-align: center;
+    }
+
+    .sentence-de {
+      font-family: var(--font-headline);
+      font-size: clamp(1.35rem, 1.1rem + 0.9vw, 1.85rem);
+      font-weight: 500;
+      line-height: 1.45;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-surface);
+    }
+
+    .blank-slot {
+      display: inline-block;
+      min-width: 3.4rem;
+      padding: 0 var(--space-sm);
+      margin: 0 var(--space-xs);
+      border-bottom: 2.5px solid var(--primary);
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-container);
+      border-radius: var(--space-xs);
+    }
+    .blank-slot.is-correct {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      border-bottom-color: var(--positive);
+    }
+    .blank-slot.is-wrong {
+      background: var(--error-container);
+      color: var(--on-error-container);
+      border-bottom-color: var(--error);
+    }
+
+    .sentence-en {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: 0.975rem;
+    }
+
+    .hint-toggle-row {
+      margin-top: var(--space-md);
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .hint-text {
+      margin-top: var(--space-sm);
+      font-family: var(--font-label);
+      font-size: 0.8125rem;
+      color: var(--secondary);
+    }
+
+    /* Article Choice Grid */
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .choice-btn {
+      min-height: 56px;
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: var(--border-crisp);
+      background: var(--surface-container-low);
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      font-family: var(--font-headline);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  transform var(--dur-micro) var(--ease-out),
+                  box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .choice-btn:hover:not(:disabled) {
+      background: var(--surface-container);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft-hover);
+    }
+    .choice-btn:disabled {
+      cursor: default;
+    }
+
+    .choice-key {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      background: var(--surface-container);
+      padding: 2px 7px;
+      border-radius: var(--space-xs);
+    }
+
+    .choice-btn.is-correct {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .choice-btn.is-correct .choice-key {
+      background: var(--primary-hover);
+      color: var(--on-primary);
+    }
+
+    .choice-btn.is-wrong {
+      background: var(--error-container);
+      color: var(--on-error-container);
+      border-color: var(--error);
+    }
+    .choice-btn.is-wrong .choice-key {
+      background: var(--error);
+      color: var(--on-error);
+    }
+
+    /* Feedback Banner */
+    .feedback-panel {
+      border-radius: var(--rounded);
+      padding: var(--space-md) var(--space-lg);
+      margin-bottom: var(--space-lg);
+      border: var(--border-crisp);
+      display: none;
+    }
+    .feedback-panel.is-visible {
+      display: block;
+    }
+    .feedback-panel.is-correct {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .feedback-panel.is-wrong {
+      background: var(--error-container);
+      color: var(--on-error-container);
+    }
+
+    .feedback-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin: 0 0 var(--space-xs) 0;
+    }
+    .feedback-detail {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .quiz-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    /* Flashcards Section */
+    .hidden { display: none !important; }
+
+    .flashcard-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .deck-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .flashcard-stage {
+      perspective: 1200px;
+      margin-bottom: var(--space-lg);
+    }
+
+    .flashcard-btn {
+      width: 100%;
+      min-height: 290px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform var(--dur-long) var(--ease-in-out);
+    }
+    .flashcard-btn.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: var(--border-crisp);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .flashcard-front {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+    }
+
+    .flashcard-back {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      transform: rotateY(180deg);
+    }
+
+    .fc-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .fc-main {
+      text-align: center;
+      padding: var(--space-md) 0;
+    }
+
+    .fc-term {
+      font-family: var(--font-headline);
+      font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem);
+      font-weight: 600;
+      margin: 0 0 var(--space-sm) 0;
+      line-height: 1.2;
+    }
+
+    .fc-sub {
+      margin: 0 auto;
+      max-width: 52ch;
+      font-size: 1rem;
+      color: var(--on-surface-variant);
+    }
+    .flashcard-back .fc-sub {
+      color: var(--on-primary-container);
+    }
+
+    .fc-example {
+      margin-top: var(--space-md);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border-radius: var(--rounded);
+      display: inline-block;
+      font-size: 0.95rem;
+    }
+
+    .fc-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+    .flashcard-back .fc-footer {
+      color: var(--on-primary-container);
+    }
+
+    .flashcard-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    /* Reference Guide at Bottom */
+    .reference-section {
+      display: grid;
+      gap: var(--space-lg);
+      margin-top: var(--space-md);
+      padding-top: var(--space-lg);
+      border-top: var(--border-crisp);
+    }
+
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+
+    .ref-card {
+      background: var(--surface-container-low);
+      border: var(--border-crisp);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-soft);
+    }
+    .ref-card.is-leaf-highlight {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    .prep-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--space-md) 0;
+      display: grid;
+      gap: var(--space-xs);
+    }
+    .prep-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: var(--space-xs) 0;
+      border-bottom: var(--border-crisp);
+      font-size: 0.9375rem;
+    }
+    .prep-list li:last-child {
+      border-bottom: 0;
+    }
+    .prep-word {
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .ref-card.is-leaf-highlight .prep-word {
+      color: var(--on-primary-container);
+    }
+
+    table.grammar-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-top: var(--space-sm);
+    }
+    table.grammar-table th,
+    table.grammar-table td {
+      padding: var(--space-sm) var(--space-xs);
+      text-align: left;
+      border-bottom: var(--border-crisp);
+    }
+    table.grammar-table th {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--on-surface-variant);
+      background: var(--surface-container);
+    }
+    .ref-card.is-leaf-highlight table.grammar-table th {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+    }
+
+    .contraction-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+    .contraction-chip {
+      background: var(--surface-container);
+      border: var(--border-crisp);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .contraction-chip strong {
+      font-family: var(--font-headline);
+      font-size: 1.05rem;
+      color: var(--primary);
+    }
+    .contraction-chip span {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    .source-footer {
+      text-align: center;
+      color: var(--on-surface-variant);
+      font-size: 0.875rem;
+      padding: var(--space-md) 0 var(--space-xl) 0;
+    }
+
+    @media (max-width: 640px) {
+      .page-grid {
+        padding: var(--space-sm);
+        gap: var(--space-md);
+      }
+      .app-header {
+        grid-template-columns: 1fr;
+        padding: var(--space-md);
+      }
+      .card, .ref-card {
+        padding: var(--space-md);
+      }
+      .choices-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-sm);
+      }
+      .prompt-box {
+        padding: var(--space-lg) var(--space-md);
+      }
+      .flashcard-btn {
+        min-height: 330px;
+      }
+      .flashcard-face {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-grid">
+    <!-- Header & Progress Overview -->
+    <header class="app-header">
+      <div>
+        <p class="kicker">German Grammar Studio · A1–A2</p>
+        <h1>Deutsche Präpositionen</h1>
+        <p class="subtitle">
+          Practise 1,000 realistic sentences across Akkusativ, Dativ, and Wechselpräpositionen, drill case-hidden flashcards, and consult the full grammar guide below.
+        </p>
+      </div>
+      <div class="kpi-grid" aria-label="Practice statistics">
+        <div class="kpi-tile is-highlight">
+          <span class="kpi-label">Accuracy</span>
+          <span class="kpi-value" id="stat-accuracy">0%</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="kpi-label">Answered</span>
+          <span class="kpi-value" id="stat-answered">0 / 1000</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="kpi-label">Streak</span>
+          <span class="kpi-value" id="stat-streak">0</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mode Switcher & Jump Links -->
+    <nav class="workspace-bar" aria-label="Primary workspace navigation">
+      <div class="mode-group">
+        <button type="button" class="btn btn-primary" id="tab-quiz" onclick="switchMode('quiz')">
+          Quiz Practice (1,000)
+        </button>
+        <button type="button" class="btn" id="tab-flashcards" onclick="switchMode('flashcards')">
+          Flashcards
+        </button>
+        <a href="#grammar-reference" class="btn btn-ghost">
+          Reference Guide ↓
+        </a>
+      </div>
+      <div class="mode-group">
+        <button type="button" class="btn btn-ghost btn-sm" id="btn-reset-progress" onclick="handleResetProgress(this)">
+          Reset Progress
+        </button>
+      </div>
+    </nav>
+
+    <!-- QUIZ SECTION -->
+    <main id="panel-quiz" class="card" aria-labelledby="quiz-heading">
+      <div class="section-header">
+        <h2 id="quiz-heading">Article &amp; Case Quiz</h2>
+        <span class="pill" id="pool-badge">Pool: 1,000 questions</span>
+      </div>
+
+      <div class="controls-grid">
+        <div class="field-group">
+          <label class="field-label" for="filter-category">Case Category</label>
+          <select id="filter-category" class="control-input" onchange="applyQuizFilter()">
+            <option value="all">All Categories (1,000)</option>
+            <option value="akk">Akkusativ Only (300)</option>
+            <option value="dat">Dativ Only (350)</option>
+            <option value="wech">Wechselpräpositionen (350)</option>
+            <option value="mistakes">Review Mistakes</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="filter-prep">Preposition</label>
+          <select id="filter-prep" class="control-input" onchange="applyQuizFilter()">
+            <option value="all">All Prepositions</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="filter-order">Order</label>
+          <select id="filter-order" class="control-input" onchange="applyQuizOrder()">
+            <option value="shuffled">Shuffled Practice</option>
+            <option value="sequential">Sequential (#1–1000)</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn" onclick="reshuffleCurrentPool()">
+          New Shuffle
+        </button>
+      </div>
+
+      <div class="quiz-meta">
+        <span class="pill" id="q-counter">Question 1 of 1000</span>
+        <span class="pill" id="q-category-pill">Akkusativ</span>
+      </div>
+
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="quiz-progress-fill"></div>
+      </div>
+
+      <div class="prompt-box" id="quiz-prompt-box">
+        <p class="sentence-de" id="q-sentence-de"></p>
+        <p class="sentence-en" id="q-sentence-en"></p>
+        <div class="hint-toggle-row">
+          <button type="button" class="btn btn-ghost btn-sm" id="btn-hint" onclick="toggleHint()">
+            Show Noun Gender Hint
+          </button>
+        </div>
+        <p class="hint-text hidden" id="q-hint-text"></p>
+      </div>
+
+      <div class="choices-grid" id="choices-grid" role="group" aria-label="Choose the correct article">
+        <button type="button" class="choice-btn" data-art="der" onclick="selectAnswer('der')"><span class="choice-key">1</span><span>der</span></button>
+        <button type="button" class="choice-btn" data-art="die" onclick="selectAnswer('die')"><span class="choice-key">2</span><span>die</span></button>
+        <button type="button" class="choice-btn" data-art="das" onclick="selectAnswer('das')"><span class="choice-key">3</span><span>das</span></button>
+        <button type="button" class="choice-btn" data-art="den" onclick="selectAnswer('den')"><span class="choice-key">4</span><span>den</span></button>
+        <button type="button" class="choice-btn" data-art="dem" onclick="selectAnswer('dem')"><span class="choice-key">5</span><span>dem</span></button>
+        <button type="button" class="choice-btn" data-art="des" onclick="selectAnswer('des')"><span class="choice-key">6</span><span>des</span></button>
+      </div>
+
+      <div class="feedback-panel" id="feedback-panel" role="status" aria-live="polite">
+        <p class="feedback-title" id="feedback-title"></p>
+        <p class="feedback-detail" id="feedback-detail"></p>
+      </div>
+
+      <div class="quiz-footer">
+        <button type="button" class="btn" id="btn-prev-q" onclick="prevQuestion()">
+          ← Previous
+        </button>
+        <span class="field-label" id="keyboard-tip">Tip: Keys 1–6 select · Enter for next</span>
+        <button type="button" class="btn btn-primary" id="btn-next-q" onclick="nextQuestion()">
+          Next Question →
+        </button>
+      </div>
+    </main>
+
+    <!-- FLASHCARDS SECTION -->
+    <section id="panel-flashcards" class="card hidden" aria-labelledby="fc-heading">
+      <div class="section-header">
+        <h2 id="fc-heading">Active-Recall Flashcards</h2>
+        <span class="pill" id="fc-mastery-badge">0 mastered</span>
+      </div>
+      <p class="subtitle" style="margin-bottom: var(--space-md);">
+        Case names are hidden on the front of every card so you test your recall before flipping. Covers every Akkusativ and Dativ preposition, article form, pronoun, and contraction.
+      </p>
+
+      <div class="flashcard-controls">
+        <div class="deck-pills" role="group" aria-label="Filter flashcard deck">
+          <button type="button" class="btn btn-primary btn-sm" id="fc-filter-all" onclick="setFlashcardFilter('all')">All Cards</button>
+          <button type="button" class="btn btn-sm" id="fc-filter-prep" onclick="setFlashcardFilter('prep')">Prepositions</button>
+          <button type="button" class="btn btn-sm" id="fc-filter-art" onclick="setFlashcardFilter('art')">Articles &amp; Pronouns</button>
+          <button type="button" class="btn btn-sm" id="fc-filter-contr" onclick="setFlashcardFilter('contr')">Contractions</button>
+          <button type="button" class="btn btn-sm" id="fc-filter-review" onclick="setFlashcardFilter('review')">Needs Review</button>
+        </div>
+        <button type="button" class="btn btn-sm" onclick="shuffleFlashcards()">Shuffle Deck</button>
+      </div>
+
+      <div class="flashcard-stage">
+        <button type="button" class="flashcard-btn" id="flashcard-btn" onclick="flipFlashcard()" aria-label="Flip flashcard">
+          <div class="flashcard-face flashcard-front">
+            <div class="fc-top">
+              <span class="pill" id="fc-front-type">Prompt</span>
+              <span class="field-label" id="fc-counter">Card 1 of 40</span>
+            </div>
+            <div class="fc-main">
+              <p class="fc-term" id="fc-front-term"></p>
+              <p class="fc-sub" id="fc-front-prompt"></p>
+            </div>
+            <div class="fc-footer">
+              <span>Click card or press Space to flip</span>
+              <span id="fc-status-front">Unreviewed</span>
+            </div>
+          </div>
+
+          <div class="flashcard-face flashcard-back">
+            <div class="fc-top">
+              <span class="pill" id="fc-back-case">Case</span>
+              <span class="field-label" id="fc-counter-back">Card 1 of 40</span>
+            </div>
+            <div class="fc-main">
+              <p class="fc-term" id="fc-back-answer"></p>
+              <p class="fc-sub" id="fc-back-detail"></p>
+              <div class="fc-example" id="fc-back-example"></div>
+            </div>
+            <div class="fc-footer">
+              <span>Click card to flip back</span>
+              <span id="fc-status-back">Unreviewed</span>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <div class="flashcard-actions">
+        <div class="mode-group">
+          <button type="button" class="btn" onclick="prevFlashcard()">← Previous</button>
+          <button type="button" class="btn" onclick="nextFlashcard()">Next →</button>
+        </div>
+        <div class="mode-group">
+          <button type="button" class="btn" id="btn-fc-review" onclick="markFlashcard('review')">Mark for Review</button>
+          <button type="button" class="btn btn-primary" id="btn-fc-mastered" onclick="markFlashcard('mastered')">Got It ✓</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPREHENSIVE GRAMMAR REFERENCE SECTION (ALWAYS AT BOTTOM) -->
+    <section id="grammar-reference" class="reference-section" aria-labelledby="ref-heading">
+      <div>
+        <p class="kicker">Grammar Reference Guide</p>
+        <h2 id="ref-heading">Complete Preposition &amp; Declension Reference</h2>
+      </div>
+
+      <div class="ref-grid">
+        <!-- Akkusativ Reference -->
+        <article class="ref-card">
+          <p class="kicker">Direct Object · Wen oder was?</p>
+          <h3>Akkusativ Prepositions</h3>
+          <ul class="prep-list">
+            <li><span class="prep-word">durch</span><span>through (<em>durch den Park</em>)</span></li>
+            <li><span class="prep-word">für</span><span>for (<em>für meine Schwester</em>)</span></li>
+            <li><span class="prep-word">gegen</span><span>against, around (<em>gegen den Plan</em>)</span></li>
+            <li><span class="prep-word">ohne</span><span>without (<em>ohne meinen Pass</em>)</span></li>
+            <li><span class="prep-word">um</span><span>around, at (<em>um den Tisch / um 8 Uhr</em>)</span></li>
+            <li><span class="prep-word">bis</span><span>until, up to (<em>bis nächsten Montag</em>)</span></li>
+            <li><span class="prep-word">entlang</span><span>along (<em>den Fluss entlang</em>)</span></li>
+          </ul>
+          <table class="grammar-table" aria-label="Akkusativ article endings">
+            <thead>
+              <tr><th>Gender</th><th>Definite</th><th>Indefinite</th><th>Negative / Poss.</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Masculine</td><td><strong>den</strong></td><td><strong>einen</strong></td><td>keinen / meinen</td></tr>
+              <tr><td>Feminine</td><td><strong>die</strong></td><td><strong>eine</strong></td><td>keine / meine</td></tr>
+              <tr><td>Neuter</td><td><strong>das</strong></td><td><strong>ein</strong></td><td>kein / mein</td></tr>
+              <tr><td>Plural</td><td><strong>die</strong></td><td>—</td><td>keine / meine</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <!-- Dativ Reference -->
+        <article class="ref-card is-leaf-highlight">
+          <p class="kicker">Indirect Object · Wem?</p>
+          <h3>Dativ Prepositions</h3>
+          <ul class="prep-list">
+            <li><span class="prep-word">aus</span><span>from, out of (<em>aus der Küche</em>)</span></li>
+            <li><span class="prep-word">außer</span><span>apart from (<em>außer dem Chef</em>)</span></li>
+            <li><span class="prep-word">bei</span><span>at, near, with (<em>beim Arzt</em>)</span></li>
+            <li><span class="prep-word">gegenüber</span><span>opposite (<em>gegenüber dem Bahnhof</em>)</span></li>
+            <li><span class="prep-word">mit</span><span>with, by (<em>mit dem Fahrrad</em>)</span></li>
+            <li><span class="prep-word">nach</span><span>after, to cities (<em>nach dem Essen</em>)</span></li>
+            <li><span class="prep-word">seit</span><span>since, for (<em>seit einem Monat</em>)</span></li>
+            <li><span class="prep-word">von</span><span>from, of, by (<em>vom Bahnhof</em>)</span></li>
+            <li><span class="prep-word">zu</span><span>to (<em>zum Supermarkt / zur Post</em>)</span></li>
+          </ul>
+          <table class="grammar-table" aria-label="Dativ article endings">
+            <thead>
+              <tr><th>Gender</th><th>Definite</th><th>Indefinite</th><th>Negative / Poss.</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Masculine</td><td><strong>dem</strong></td><td><strong>einem</strong></td><td>keinem / meinem</td></tr>
+              <tr><td>Feminine</td><td><strong>der</strong></td><td><strong>einer</strong></td><td>keiner / meiner</td></tr>
+              <tr><td>Neuter</td><td><strong>dem</strong></td><td><strong>einem</strong></td><td>keinem / meinem</td></tr>
+              <tr><td>Plural</td><td><strong>den</strong> (+ -n)</td><td>—</td><td>keinen / meinen (+ -n)</td></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+
+      <!-- Wechselpräpositionen & Contractions -->
+      <div class="ref-grid">
+        <article class="ref-card">
+          <p class="kicker">Two-Way Prepositions</p>
+          <h3>Wechselpräpositionen</h3>
+          <p style="margin-top:0; color: var(--on-surface-variant);">
+            The nine prepositions <strong>an, auf, hinter, in, neben, über, unter, vor, zwischen</strong> take either Akkusativ or Dativ depending on whether the verb expresses direction or static position:
+          </p>
+          <table class="grammar-table" aria-label="Wechselpräpositionen rules">
+            <thead>
+              <tr><th>Question</th><th>Case</th><th>Typical Verbs</th><th>Example</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Wohin?</strong><br>(Direction / motion)</td>
+                <td><strong>Akkusativ</strong></td>
+                <td>gehen, fahren, legen, stellen, setzen, hängen</td>
+                <td>Ich lege das Buch auf <strong>den</strong> Tisch.</td>
+              </tr>
+              <tr>
+                <td><strong>Wo?</strong><br>(Location / position)</td>
+                <td><strong>Dativ</strong></td>
+                <td>sein, stehen, liegen, sitzen, hängen, wohnen</td>
+                <td>Das Buch liegt auf <strong>dem</strong> Tisch.</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="ref-card">
+          <p class="kicker">Everyday Contractions</p>
+          <h3>Common Preposition + Article Contractions</h3>
+          <p style="margin-top:0; color: var(--on-surface-variant);">
+            In written and spoken German, common prepositions frequently merge with <em>dem</em>, <em>der</em>, or <em>das</em>:
+          </p>
+          <div class="contraction-grid">
+            <div class="contraction-chip"><strong>im</strong><span>in + dem (Dat)</span></div>
+            <div class="contraction-chip"><strong>ins</strong><span>in + das (Akk)</span></div>
+            <div class="contraction-chip"><strong>am</strong><span>an + dem (Dat)</span></div>
+            <div class="contraction-chip"><strong>ans</strong><span>an + das (Akk)</span></div>
+            <div class="contraction-chip"><strong>zum</strong><span>zu + dem (Dat)</span></div>
+            <div class="contraction-chip"><strong>zur</strong><span>zu + der (Dat)</span></div>
+            <div class="contraction-chip"><strong>beim</strong><span>bei + dem (Dat)</span></div>
+            <div class="contraction-chip"><strong>vom</strong><span>von + dem (Dat)</span></div>
+            <div class="contraction-chip"><strong>aufs</strong><span>auf + das (Akk)</span></div>
+            <div class="contraction-chip"><strong>fürs</strong><span>für + das (Akk)</span></div>
+            <div class="contraction-chip"><strong>durchs</strong><span>durch + das (Akk)</span></div>
+            <div class="contraction-chip"><strong>ums</strong><span>um + das (Akk)</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="source-footer">
+      Built from A1/A2 German grammar references (<em>Basic German</em>, <em>Schritte Übungsgrammatik</em>, and <em>Collins Easy Learning German Verbs</em>).
+    </footer>
+  </div>
+
+  <api-shim></api-shim>
+
+  <script>
+    // =========================================================================
+    // 1. VERIFIED NOUN LEXICON (Exact gender, English gloss, Dativ-plural)
+    // =========================================================================
+    const NOUNS = {
+      Bruder:      { de: `Bruder`,      en: `brother`,        g: `m` },
+      Schwester:   { de: `Schwester`,   en: `sister`,         g: `f` },
+      Kind:        { de: `Kind`,        en: `child`,          g: `n` },
+      Freund:      { de: `Freund`,      en: `friend`,         g: `m` },
+      Freundin:    { de: `Freundin`,    en: `friend`,         g: `f` },
+      Großmutter:  { de: `Großmutter`,  en: `grandmother`,    g: `f` },
+      Kollegen:    { de: `Kollegen`,    en: `colleagues`,     g: `p`, datPl: `Kollegen` },
+      Kollegin:    { de: `Kollegin`,    en: `colleague`,      g: `f` },
+      Prüfung:     { de: `Prüfung`,     en: `exam`,           g: `f` },
+      Kurs:        { de: `Kurs`,        en: `course`,         g: `m` },
+      Treffen:     { de: `Treffen`,     en: `meeting`,        g: `n` },
+      Projekt:     { de: `Projekt`,     en: `project`,        g: `n` },
+      Reise:       { de: `Reise`,       en: `trip`,           g: `f` },
+      Unterricht:  { de: `Unterricht`,  en: `lesson`,         g: `m` },
+      Plan:        { de: `Plan`,        en: `plan`,           g: `m` },
+      Vorschlag:   { de: `Vorschlag`,   en: `proposal`,       g: `m` },
+      Idee:        { de: `Idee`,        en: `idea`,           g: `f` },
+      Lösung:      { de: `Lösung`,      en: `solution`,       g: `f` },
+      Angebot:     { de: `Angebot`,     en: `offer`,          g: `n` },
+      Regeln:      { de: `Regeln`,      en: `rules`,          g: `p`, datPl: `Regeln` },
+      Regenschirm: { de: `Regenschirm`, en: `umbrella`,       g: `m` },
+      Tasche:      { de: `Tasche`,      en: `bag`,            g: `f` },
+      Ticket:      { de: `Ticket`,      en: `ticket`,         g: `n` },
+      Pass:        { de: `Pass`,        en: `passport`,       g: `m` },
+      Kamera:      { de: `Kamera`,      en: `camera`,         g: `f` },
+      Schuhe:      { de: `Schuhe`,      en: `shoes`,          g: `p`, datPl: `Schuhen` },
+      Computer:    { de: `Computer`,    en: `computer`,       g: `m` },
+      Wörterbuch:  { de: `Wörterbuch`,  en: `dictionary`,     g: `n` },
+      Stift:       { de: `Stift`,       en: `pen`,            g: `m` },
+      Brille:      { de: `Brille`,      en: `glasses`,        g: `f` },
+      Notizen:     { de: `Notizen`,     en: `notes`,          g: `p`, datPl: `Notizen` },
+      Buch:        { de: `Buch`,        en: `book`,           g: `n` },
+      Park:        { de: `Park`,        en: `park`,           g: `m` },
+      Wald:        { de: `Wald`,        en: `forest`,         g: `m` },
+      Stadt:       { de: `Stadt`,       en: `town`,           g: `f` },
+      Zentrum:     { de: `Zentrum`,     en: `centre`,         g: `n` },
+      Garten:      { de: `Garten`,      en: `garden`,         g: `m` },
+      Straßen:     { de: `Straßen`,     en: `streets`,        g: `p`, datPl: `Straßen` },
+      Tunnel:      { de: `Tunnel`,      en: `tunnel`,         g: `m` },
+      Dorf:        { de: `Dorf`,        en: `village`,        g: `n` },
+      Altstadt:    { de: `Altstadt`,    en: `old town`,       g: `f` },
+      Tal:         { de: `Tal`,         en: `valley`,         g: `n` },
+      Bezirk:      { de: `Bezirk`,      en: `district`,       g: `m` },
+      Gesetz:      { de: `Gesetz`,      en: `law`,            g: `n` },
+      Entscheidung:{ de: `Entscheidung`,en: `decision`,       g: `f` },
+      Gebühren:    { de: `Gebühren`,    en: `fees`,           g: `p`, datPl: `Gebühren` },
+      Wand:        { de: `Wand`,        en: `wall`,           g: `f` },
+      Tür:         { de: `Tür`,         en: `door`,           g: `f` },
+      Fenster:     { de: `Fenster`,     en: `window`,         g: `n` },
+      Zaun:        { de: `Zaun`,        en: `fence`,          g: `m` },
+      Schrank:     { de: `Schrank`,     en: `cupboard`,       g: `m` },
+      Tisch:       { de: `Tisch`,       en: `table`,          g: `m` },
+      See:         { de: `See`,         en: `lake`,           g: `m` },
+      Haus:        { de: `Haus`,        en: `house`,          g: `n` },
+      Platz:       { de: `Platz`,       en: `square`,         g: `m` },
+      Kirche:      { de: `Kirche`,      en: `church`,         g: `f` },
+      Bäume:       { de: `Bäume`,       en: `trees`,          g: `p`, datPl: `Bäumen` },
+      Lagerfeuer:  { de: `Lagerfeuer`,  en: `campfire`,       g: `n` },
+      Sofa:        { de: `Sofa`,        en: `sofa`,           g: `n` },
+      Brunnen:     { de: `Brunnen`,     en: `fountain`,       g: `m` },
+      Theke:       { de: `Theke`,       en: `counter`,        g: `f` },
+      Bus:         { de: `Bus`,         en: `bus`,            g: `m` },
+      UBahn:       { de: `U-Bahn`,      en: `underground`,    g: `f` },
+      Zug:         { de: `Zug`,         en: `train`,          g: `m` },
+      Fahrrad:     { de: `Fahrrad`,     en: `bicycle`,        g: `n` },
+      Auto:        { de: `Auto`,        en: `car`,            g: `n` },
+      Straßenbahn: { de: `Straßenbahn`, en: `tram`,           g: `f` },
+      Lehrer:      { de: `Lehrer`,      en: `teacher`,        g: `m` },
+      Lehrerin:    { de: `Lehrerin`,    en: `teacher`,        g: `f` },
+      Team:        { de: `Team`,        en: `team`,           g: `n` },
+      Freunde:     { de: `Freunde`,     en: `friends`,        g: `p`, datPl: `Freunden` },
+      Nachbarin:   { de: `Nachbarin`,   en: `neighbour`,      g: `f` },
+      Arzt:        { de: `Arzt`,        en: `doctor`,         g: `m` },
+      Zahnärztin:  { de: `Zahnärztin`,  en: `dentist`,        g: `f` },
+      Kreditkarte: { de: `Kreditkarte`, en: `credit card`,    g: `f` },
+      Bargeld:     { de: `Bargeld`,     en: `cash`,           g: `n` },
+      Handy:       { de: `Handy`,       en: `mobile phone`,   g: `n` },
+      Gutschein:   { de: `Gutschein`,   en: `voucher`,        g: `m` },
+      Münzen:      { de: `Münzen`,      en: `coins`,          g: `p`, datPl: `Münzen` },
+      Küche:       { de: `Küche`,       en: `kitchen`,        g: `f` },
+      Büro:        { de: `Büro`,        en: `office`,         g: `n` },
+      Bahnhof:     { de: `Bahnhof`,     en: `station`,        g: `m` },
+      Zimmer:      { de: `Zimmer`,      en: `room`,           g: `n` },
+      Bäckerei:    { de: `Bäckerei`,    en: `bakery`,         g: `f` },
+      Geschäfte:   { de: `Geschäfte`,   en: `shops`,          g: `p`, datPl: `Geschäften` },
+      Schweiz:     { de: `Schweiz`,     en: `Switzerland`,    g: `f` },
+      Türkei:      { de: `Türkei`,      en: `Turkey`,         g: `f` },
+      Niederlande: { de: `Niederlande`, en: `Netherlands`,    g: `p`, datPl: `Niederlanden` },
+      USA:         { de: `USA`,         en: `USA`,            g: `p`, datPl: `USA` },
+      Norden:      { de: `Norden`,      en: `north`,          g: `m` },
+      Süden:       { de: `Süden`,       en: `south`,          g: `m` },
+      Großeltern:  { de: `Großeltern`,  en: `grandparents`,   g: `p`, datPl: `Großeltern` },
+      Tante:       { de: `Tante`,       en: `aunt`,           g: `f` },
+      Friseur:     { de: `Friseur`,     en: `hairdresser`,    g: `m` },
+      Bäcker:      { de: `Bäcker`,      en: `baker`,          g: `m` },
+      Rathaus:     { de: `Rathaus`,     en: `town hall`,      g: `n` },
+      Post:        { de: `Post`,        en: `post office`,    g: `f` },
+      Museum:      { de: `Museum`,      en: `museum`,         g: `n` },
+      Marktplatz:  { de: `Marktplatz`,  en: `market square`,  g: `m` },
+      Supermarkt:  { de: `Supermarkt`,  en: `supermarket`,    g: `m` },
+      Bank:        { de: `Bank`,        en: `bank`,           g: `f` },
+      Krankenhaus: { de: `Krankenhaus`, en: `hospital`,       g: `n` },
+      Arbeit:      { de: `Arbeit`,      en: `work`,           g: `f` },
+      Schule:      { de: `Schule`,      en: `school`,         g: `f` },
+      Training:    { de: `Training`,    en: `training`,       g: `n` },
+      Flughafen:   { de: `Flughafen`,   en: `airport`,        g: `m` },
+      Markt:       { de: `Markt`,       en: `market`,         g: `m` },
+      Eltern:      { de: `Eltern`,      en: `parents`,        g: `p`, datPl: `Eltern` },
+      Behörde:     { de: `Behörde`,     en: `authority`,      g: `f` },
+      Essen:       { de: `Essen`,       en: `meal`,           g: `n` },
+      Konzert:     { de: `Konzert`,     en: `concert`,        g: `n` },
+      Pause:       { de: `Pause`,       en: `break`,          g: `f` },
+      Ferien:      { de: `Ferien`,      en: `holidays`,       g: `p`, datPl: `Ferien` },
+      Morgen:      { de: `Morgen`,      en: `morning`,        g: `m` },
+      Wochenende:  { de: `Wochenende`,  en: `weekend`,        g: `n` },
+      Montag:      { de: `Montag`,      en: `Monday`,         g: `m` },
+      Chef:        { de: `Chef`,        en: `boss`,           g: `m` },
+      Chefin:      { de: `Chefin`,      en: `boss`,           g: `f` },
+      Onkel:       { de: `Onkel`,       en: `uncle`,          g: `m` },
+      Nachbarn:    { de: `Nachbarn`,    en: `neighbours`,     g: `p`, datPl: `Nachbarn` },
+      Bibliothek:  { de: `Bibliothek`,  en: `library`,        g: `f` },
+      Kino:        { de: `Kino`,        en: `cinema`,         g: `n` },
+      Rucksack:    { de: `Rucksack`,    en: `rucksack`,       g: `m` },
+      Umschlag:    { de: `Umschlag`,    en: `envelope`,       g: `m` },
+      Mappe:       { de: `Mappe`,       en: `folder`,         g: `f` },
+      Schublade:   { de: `Schublade`,   en: `drawer`,         g: `f` },
+      Koffer:      { de: `Koffer`,      en: `suitcase`,       g: `m` },
+      Schreibtisch:{ de: `Schreibtisch`,en: `desk`,           g: `m` },
+      Regal:       { de: `Regal`,       en: `shelf`,          g: `n` },
+      Fensterbank: { de: `Fensterbank`, en: `windowsill`,     g: `f` },
+      Kommode:     { de: `Kommode`,     en: `chest of drawers`, g: `f` },
+      Tafel:       { de: `Tafel`,       en: `board`,          g: `f` },
+      Pinnwand:    { de: `Pinnwand`,    en: `noticeboard`,    g: `f` },
+      Bett:        { de: `Bett`,        en: `bed`,            g: `n` },
+      Stuhl:       { de: `Stuhl`,       en: `chair`,          g: `m` },
+      Sitzbank:    { de: `Bank`,        en: `bench`,          g: `f` },
+      Eingang:     { de: `Eingang`,     en: `entrance`,       g: `m` },
+      Garage:      { de: `Garage`,      en: `garage`,         g: `f` },
+      Vorhang:     { de: `Vorhang`,     en: `curtain`,        g: `m` },
+      Lampe:       { de: `Lampe`,       en: `lamp`,           g: `f` },
+      SesselPl:    { de: `Sessel`,      en: `armchairs`,      g: `p`, datPl: `Sesseln` },
+      StühlePl:    { de: `Stühle`,      en: `chairs`,         g: `p`, datPl: `Stühlen` },
+      RegalePl:    { de: `Regale`,      en: `shelves`,        g: `p`, datPl: `Regalen` },
+      FensterPl:   { de: `Fenster`,     en: `windows`,        g: `p`, datPl: `Fenstern` },
+      BettenPl:    { de: `Betten`,      en: `beds`,           g: `p`, datPl: `Betten` },
+      SchränkePl:  { de: `Schränke`,    en: `cupboards`,      g: `p`, datPl: `Schränken` },
+      SofasPl:     { de: `Sofas`,       en: `sofas`,          g: `p`, datPl: `Sofas` },
+      Café:        { de: `Café`,        en: `café`,           g: `n` },
+      Hotel:       { de: `Hotel`,       en: `hotel`,          g: `n` },
+      Wartezimmer: { de: `Wartezimmer`, en: `waiting room`,   g: `n` },
+      Kasse:       { de: `Kasse`,       en: `checkout`,       g: `f` },
+      Schalter:    { de: `Schalter`,    en: `counter`,        g: `m` }
+    };
+
+    // =========================================================================
+    // 2. CURATED REALISTIC SEMANTIC FRAMES (Guaranteed real-world coherence)
+    // =========================================================================
+    const FRAMES = [
+      // --- AKKUSATIV ---
+      {
+        cat: `akk`, prep: `für`,
+        why: `The preposition "für" always takes the Akkusativ case.`,
+        subjs: [
+          [`Ich kaufe`, `I am buying`],
+          [`Wir suchen`, `We are looking for`],
+          [`Anna bestellt`, `Anna is ordering`],
+          [`Mein Vater hat`, `My father has`],
+          [`Die Familie bringt`, `The family is bringing`]
+        ],
+        midDe: `ein Geschenk für`, midEn: `a present for the`, endDe: `.`,
+        nouns: [`Bruder`, `Schwester`, `Kind`, `Freund`, `Freundin`, `Großmutter`, `Kollegen`]
+      },
+      {
+        cat: `akk`, prep: `für`,
+        why: `"für" always requires the Akkusativ case.`,
+        subjs: [
+          [`Ich brauche`, `I need`],
+          [`Wir haben`, `We have`],
+          [`Du brauchst`, `You need`],
+          [`Er plant`, `He is planning`],
+          [`Sie nimmt sich`, `She takes`]
+        ],
+        midDe: `genug Zeit für`, midEn: `enough time for the`, endDe: `.`,
+        nouns: [`Prüfung`, `Kurs`, `Treffen`, `Projekt`, `Reise`, `Unterricht`]
+      },
+      {
+        cat: `akk`, prep: `für`,
+        why: `"für" governs the Akkusativ case (being in favour of something).`,
+        subjs: [
+          [`Ich bin`, `I am`],
+          [`Wir stimmen`, `We are voting`],
+          [`Alle stimmen`, `Everyone is voting`],
+          [`Die Chefin ist`, `The boss is`],
+          [`Der Stadtrat stimmt`, `The city council votes`]
+        ],
+        midDe: `für`, midEn: `in favour of the`, endDe: `.`,
+        nouns: [`Plan`, `Vorschlag`, `Idee`, `Lösung`, `Angebot`, `Regeln`]
+      },
+      {
+        cat: `akk`, prep: `ohne`,
+        why: `The preposition "ohne" always takes the Akkusativ case.`,
+        subjs: [
+          [`Ich reise`, `I am travelling`],
+          [`Wir fahren`, `We are travelling`],
+          [`Maria fährt`, `Maria is travelling`],
+          [`Mein Vater reist`, `My father is travelling`],
+          [`Die Touristen wandern`, `The tourists are hiking`]
+        ],
+        midDe: `heute ohne`, midEn: `today without the`, endDe: `.`,
+        nouns: [`Regenschirm`, `Tasche`, `Ticket`, `Pass`, `Kamera`, `Schuhe`]
+      },
+      {
+        cat: `akk`, prep: `ohne`,
+        why: `"ohne" always requires the Akkusativ case.`,
+        subjs: [
+          [`Ich arbeite`, `I am working`],
+          [`Wir beginnen`, `We are starting`],
+          [`Der Student lernt`, `The student is studying`],
+          [`Meine Kollegin schreibt`, `My colleague is writing`],
+          [`Ihr übt`, `You are practising`]
+        ],
+        midDe: `heute ohne`, midEn: `today without the`, endDe: `.`,
+        nouns: [`Computer`, `Wörterbuch`, `Stift`, `Brille`, `Notizen`, `Buch`]
+      },
+      {
+        cat: `akk`, prep: `durch`,
+        why: `The preposition "durch" always takes the Akkusativ case.`,
+        subjs: [
+          [`Ich gehe`, `I am walking`],
+          [`Wir spazieren`, `We are strolling`],
+          [`Das Paar schlendert`, `The couple is strolling`],
+          [`Die Kinder laufen`, `The children are running`],
+          [`Mein Hund rennt`, `My dog is running`]
+        ],
+        midDe: `langsam durch`, midEn: `slowly through the`, endDe: `.`,
+        nouns: [`Park`, `Wald`, `Stadt`, `Zentrum`, `Garten`, `Straßen`]
+      },
+      {
+        cat: `akk`, prep: `durch`,
+        why: `"durch" governs the Akkusativ case (movement through a passage or area).`,
+        subjs: [
+          [`Der Bus fährt`, `The bus is driving`],
+          [`Wir fahren`, `We are driving`],
+          [`Der Zug rollt`, `The train is rolling`],
+          [`Das Taxi fährt`, `The taxi is driving`],
+          [`Die Radfahrer fahren`, `The cyclists are riding`]
+        ],
+        midDe: `direkt durch`, midEn: `straight through the`, endDe: `.`,
+        nouns: [`Tunnel`, `Dorf`, `Altstadt`, `Tal`, `Bezirk`]
+      },
+      {
+        cat: `akk`, prep: `gegen`,
+        why: `The preposition "gegen" always takes the Akkusativ case.`,
+        subjs: [
+          [`Ich bin`, `I am`],
+          [`Viele Bürger protestieren`, `Many citizens are protesting`],
+          [`Die Gruppe ist`, `The group is`],
+          [`Mein Nachbar argumentiert`, `My neighbour argues`],
+          [`Wir stimmen`, `We vote`]
+        ],
+        midDe: `gegen`, midEn: `against the`, endDe: `.`,
+        nouns: [`Plan`, `Gesetz`, `Entscheidung`, `Vorschlag`, `Gebühren`]
+      },
+      {
+        cat: `akk`, prep: `gegen`,
+        why: `"gegen" always requires the Akkusativ case (physical contact against something).`,
+        subjs: [
+          [`Der Ball fliegt`, `The ball flies`],
+          [`Ich stoße`, `I bump`],
+          [`Das Kind läuft`, `The child runs`],
+          [`Der Wind drückt`, `The wind pushes`],
+          [`Der Stuhl rutscht`, `The chair slides`]
+        ],
+        midDe: `aus Versehen gegen`, midEn: `accidentally against the`, endDe: `.`,
+        nouns: [`Wand`, `Tür`, `Fenster`, `Zaun`, `Schrank`, `Tisch`]
+      },
+      {
+        cat: `akk`, prep: `um`,
+        why: `The preposition "um" always takes the Akkusativ case.`,
+        subjs: [
+          [`Wir gehen`, `We walk`],
+          [`Die Jogger laufen`, `The joggers run`],
+          [`Ich fahre`, `I ride`],
+          [`Die Kinder tanzen`, `The children dance`],
+          [`Der Hund läuft`, `The dog runs`]
+        ],
+        midDe: `einmal um`, midEn: `once around the`, endDe: `.`,
+        nouns: [`See`, `Haus`, `Platz`, `Kirche`, `Tisch`, `Bäume`]
+      },
+      {
+        cat: `akk`, prep: `um`,
+        why: `"um" governs the Akkusativ case (positioned around something).`,
+        subjs: [
+          [`Die Familie sitzt`, `The family is sitting`],
+          [`Wir versammeln uns`, `We are gathering`],
+          [`Alle Gäste stehen`, `All guests are standing`],
+          [`Die Freunde sitzen`, `The friends are sitting`],
+          [`Die Schüler stehen`, `The pupils are standing`]
+        ],
+        midDe: `gemütlich um`, midEn: `cosily around the`, endDe: `.`,
+        nouns: [`Tisch`, `Lagerfeuer`, `Sofa`, `Brunnen`, `Theke`]
+      },
+
+      // --- DATIV ---
+      {
+        cat: `dat`, prep: `mit`,
+        why: `The preposition "mit" always takes the Dativ case (means of transport).`,
+        subjs: [
+          [`Ich fahre`, `I travel`],
+          [`Wir fahren`, `We travel`],
+          [`Meine Schwester kommt`, `My sister comes`],
+          [`Herr Müller fährt`, `Mr Müller travels`],
+          [`Die Studenten fahren`, `The students travel`]
+        ],
+        midDe: `jeden Morgen mit`, midEn: `every morning by`, endDe: `.`,
+        nouns: [`Bus`, `UBahn`, `Zug`, `Fahrrad`, `Auto`, `Straßenbahn`]
+      },
+      {
+        cat: `dat`, prep: `mit`,
+        why: `"mit" always requires the Dativ case.`,
+        subjs: [
+          [`Ich spreche`, `I am speaking`],
+          [`Wir arbeiten`, `We are working`],
+          [`Der Chef telefoniert`, `The boss is on the phone`],
+          [`Laura diskutiert`, `Laura is discussing`],
+          [`Du triffst dich`, `You are meeting`]
+        ],
+        midDe: `heute mit`, midEn: `today with the`, endDe: `.`,
+        nouns: [`Kollegin`, `Lehrer`, `Team`, `Freunde`, `Nachbarin`, `Arzt`]
+      },
+      {
+        cat: `dat`, prep: `mit`,
+        why: `"mit" always governs the Dativ case.`,
+        subjs: [
+          [`Ich bezahle`, `I pay`],
+          [`Wir bezahlen`, `We pay`],
+          [`Der Gast zahlt`, `The guest pays`],
+          [`Meine Tante zahlt`, `My aunt pays`],
+          [`Die Kunden bezahlen`, `The customers pay`]
+        ],
+        midDe: `an der Kasse mit`, midEn: `at the checkout with the`, endDe: `.`,
+        nouns: [`Kreditkarte`, `Bargeld`, `Handy`, `Gutschein`, `Münzen`]
+      },
+      {
+        cat: `dat`, prep: `aus`,
+        why: `The preposition "aus" always takes the Dativ case (coming out of an enclosed space).`,
+        subjs: [
+          [`Ich komme`, `I am coming`],
+          [`Wir gehen`, `We are walking`],
+          [`Die Gäste treten`, `The guests are stepping`],
+          [`Der Lehrer kommt`, `The teacher is coming`],
+          [`Mein Freund läuft`, `My friend is walking`]
+        ],
+        midDe: `gerade aus`, midEn: `just now out of the`, endDe: `.`,
+        nouns: [`Haus`, `Küche`, `Büro`, `Bahnhof`, `Zimmer`, `Bäckerei`, `Geschäfte`]
+      },
+      {
+        cat: `dat`, prep: `aus`,
+        why: `"aus" always requires the Dativ case (origin).`,
+        subjs: [
+          [`Ich komme`, `I come`],
+          [`Meine Nachbarin kommt`, `My neighbour comes`],
+          [`Die Musiker stammen`, `The musicians hail`],
+          [`Unser Gast kommt`, `Our guest comes`],
+          [`Wir kommen`, `We come`]
+        ],
+        midDe: `ursprünglich aus`, midEn: `originally from the`, endDe: `.`,
+        nouns: [`Schweiz`, `Türkei`, `Niederlande`, `USA`, `Norden`, `Süden`]
+      },
+      {
+        cat: `dat`, prep: `bei`,
+        why: `The preposition "bei" always takes the Dativ case.`,
+        subjs: [
+          [`Ich bin`, `I am`],
+          [`Wir warten`, `We are waiting`],
+          [`Mein Sohn bleibt`, `My son is staying`],
+          [`Frau Weber sitzt`, `Mrs Weber is sitting`],
+          [`Die Kinder sind`, `The children are`]
+        ],
+        midDe: `heute Nachmittag bei`, midEn: `this afternoon at the`, endDe: `.`,
+        nouns: [`Arzt`, `Zahnärztin`, `Großeltern`, `Tante`, `Friseur`, `Bäcker`]
+      },
+      {
+        cat: `dat`, prep: `bei`,
+        why: `"bei" always governs the Dativ case (near a location).`,
+        subjs: [
+          [`Das Hotel liegt`, `The hotel is located`],
+          [`Die Bushaltestelle ist`, `The bus stop is`],
+          [`Unser Büro liegt`, `Our office is located`],
+          [`Die Apotheke befindet sich`, `The pharmacy is located`],
+          [`Der Parkplatz ist`, `The car park is`]
+        ],
+        midDe: `direkt bei`, midEn: `right near the`, endDe: `.`,
+        nouns: [`Bahnhof`, `Kirche`, `Rathaus`, `Post`, `Museum`, `Marktplatz`]
+      },
+      {
+        cat: `dat`, prep: `zu`,
+        why: `The preposition "zu" always takes the Dativ case (destination).`,
+        subjs: [
+          [`Ich gehe`, `I am going`],
+          [`Wir fahren`, `We are going`],
+          [`Meine Mutter geht`, `My mother is going`],
+          [`Der Bote fährt`, `The courier is driving`],
+          [`Du gehst`, `You are going`]
+        ],
+        midDe: `jetzt zu`, midEn: `now to the`, endDe: `.`,
+        nouns: [`Supermarkt`, `Post`, `Bahnhof`, `Bank`, `Krankenhaus`, `Rathaus`, `Freunde`]
+      },
+      {
+        cat: `dat`, prep: `von`,
+        why: `The preposition "von" always takes the Dativ case.`,
+        subjs: [
+          [`Ich komme`, `I am coming`],
+          [`Wir fahren`, `We are driving`],
+          [`Mein Mann kommt`, `My husband is coming`],
+          [`Die Kollegin kommt`, `The colleague is coming`],
+          [`Die Schüler laufen`, `The pupils are walking`]
+        ],
+        midDe: `gerade von`, midEn: `just now from the`, endDe: `.`,
+        nouns: [`Arbeit`, `Bahnhof`, `Schule`, `Training`, `Flughafen`, `Markt`]
+      },
+      {
+        cat: `dat`, prep: `von`,
+        why: `"von" always requires the Dativ case (receiving from someone).`,
+        subjs: [
+          [`Ich bekomme`, `I receive`],
+          [`Wir erhalten`, `We receive`],
+          [`Jonas bekommt`, `Jonas receives`],
+          [`Meine Oma bekommt`, `My grandma receives`],
+          [`Das Amt erhält`, `The office receives`]
+        ],
+        midDe: `heute eine Nachricht von`, midEn: `today a message from the`, endDe: `.`,
+        nouns: [`Freundin`, `Bruder`, `Lehrerin`, `Eltern`, `Kind`, `Behörde`]
+      },
+      {
+        cat: `dat`, prep: `nach`,
+        why: `The preposition "nach" always takes the Dativ case (time sequence: after).`,
+        subjs: [
+          [`Ich gehe`, `I go`],
+          [`Wir fahren`, `We drive`],
+          [`Die Gäste gehen`, `The guests go`],
+          [`Mein Kollege fährt`, `My colleague drives`],
+          [`Die Kinder laufen`, `The children walk`]
+        ],
+        midDe: `nach`, midEn: `after the`, endDe: ` nach Hause.`,
+        nouns: [`Unterricht`, `Arbeit`, `Essen`, `Konzert`, `Pause`, `Ferien`]
+      },
+      {
+        cat: `dat`, prep: `seit`,
+        why: `The preposition "seit" always takes the Dativ case (duration starting in the past).`,
+        subjs: [
+          [`Ich lerne`, `I have been studying`],
+          [`Wir üben`, `We have been practising`],
+          [`Mein Kollege arbeitet`, `My colleague has been working`],
+          [`Die Schüler lesen`, `The pupils have been reading`],
+          [`Anna schreibt`, `Anna has been writing`]
+        ],
+        midDe: `schon seit`, midEn: `already since the`, endDe: ` sehr fleißig.`,
+        nouns: [`Morgen`, `Pause`, `Wochenende`, `Montag`, `Ferien`]
+      },
+      {
+        cat: `dat`, prep: `gegenüber`,
+        why: `The preposition "gegenüber" always takes the Dativ case.`,
+        subjs: [
+          [`Die Bäckerei ist`, `The bakery is`],
+          [`Unser Haus steht`, `Our house stands`],
+          [`Das Kino liegt`, `The cinema is located`],
+          [`Die Haltestelle befindet sich`, `The stop is located`],
+          [`Das Restaurant liegt`, `The restaurant is`]
+        ],
+        midDe: `direkt gegenüber`, midEn: `directly opposite the`, endDe: `.`,
+        nouns: [`Rathaus`, `Schule`, `Bahnhof`, `Post`, `Museum`, `Park`]
+      },
+      {
+        cat: `dat`, prep: `außer`,
+        why: `The preposition "außer" always takes the Dativ case.`,
+        subjs: [
+          [`Alle Freunde kommen heute`, `All friends are coming today`],
+          [`Alle Kollegen haben Zeit`, `All colleagues have time`],
+          [`Die ganze Gruppe fährt mit`, `The whole group is coming along`],
+          [`Alle Teilnehmer sind pünktlich`, `All participants are on time`],
+          [`Alle Bewohner helfen mit`, `All residents are helping out`]
+        ],
+        midDe: `– außer`, midEn: `— except for the`, endDe: `.`,
+        nouns: [`Chef`, `Chefin`, `Kind`, `Onkel`, `Nachbarn`]
+      },
+
+      // --- WECHSELPRÄPOSITIONEN (Wohin? -> AKKUSATIV) ---
+      {
+        cat: `wech_akk`, prep: `in`,
+        why: `"in" takes Akkusativ here because the verb expresses movement into a place (Wohin?).`,
+        subjs: [
+          [`Ich gehe`, `I am going`],
+          [`Wir gehen`, `We are going`],
+          [`Frau Berg geht`, `Ms Berg is going`],
+          [`Die Kinder gehen`, `The children are going`],
+          [`Mein Freund geht`, `My friend is going`]
+        ],
+        midDe: `am Vormittag in`, midEn: `in the morning into the`, endDe: `.`,
+        nouns: [`Supermarkt`, `Bibliothek`, `Kino`, `Museum`, `Bäckerei`, `Park`, `Büro`]
+      },
+      {
+        cat: `wech_akk`, prep: `in`,
+        why: `"in" + Akkusativ: placing items into a container (Wohin?).`,
+        subjs: [
+          [`Ich lege`, `I put`],
+          [`Wir stecken`, `We slip`],
+          [`Paul legt`, `Paul puts`],
+          [`Meine Mutter packt`, `My mother packs`],
+          [`Die Schülerin legt`, `The pupil puts`]
+        ],
+        midDe: `die Unterlagen in`, midEn: `the documents into the`, endDe: `.`,
+        nouns: [`Tasche`, `Rucksack`, `Umschlag`, `Mappe`, `Schublade`, `Koffer`]
+      },
+      {
+        cat: `wech_akk`, prep: `auf`,
+        why: `"auf" + Akkusativ: placing an object onto a horizontal surface (Wohin?).`,
+        subjs: [
+          [`Ich stelle`, `I place`],
+          [`Wir stellen`, `We place`],
+          [`Der Kellner stellt`, `The waiter places`],
+          [`Meine Schwester stellt`, `My sister places`],
+          [`Du stellst`, `You place`]
+        ],
+        midDe: `die Tasse auf`, midEn: `the cup onto the`, endDe: `.`,
+        nouns: [`Tisch`, `Schreibtisch`, `Theke`, `Regal`, `Fensterbank`, `Kommode`]
+      },
+      {
+        cat: `wech_akk`, prep: `an`,
+        why: `"an" + Akkusativ: attaching or hanging something onto a vertical surface (Wohin?).`,
+        subjs: [
+          [`Ich hänge`, `I hang`],
+          [`Wir hängen`, `We hang`],
+          [`Der Lehrer klebt`, `The teacher sticks`],
+          [`Lisa hängt`, `Lisa hangs`],
+          [`Die Mitarbeiter hängen`, `The staff hang`]
+        ],
+        midDe: `das Plakat an`, midEn: `the poster onto the`, endDe: `.`,
+        nouns: [`Wand`, `Tür`, `Tafel`, `Fenster`, `Schrank`, `Pinnwand`]
+      },
+      {
+        cat: `wech_akk`, prep: `an`,
+        why: `"an" + Akkusativ: moving to sit down at a spot (Wohin?).`,
+        subjs: [
+          [`Ich setze mich`, `I sit down`],
+          [`Wir setzen uns`, `We sit down`],
+          [`Die Gäste setzen sich`, `The guests sit down`],
+          [`Mein Kollege setzt sich`, `My colleague sits down`],
+          [`Die Schülerin setzt sich`, `The pupil sits down`]
+        ],
+        midDe: `an`, midEn: `at the`, endDe: `.`,
+        nouns: [`Tisch`, `Schreibtisch`, `Fenster`, `Platz`, `Theke`]
+      },
+      {
+        cat: `wech_akk`, prep: `unter`,
+        why: `"unter" + Akkusativ: moving an item underneath something (Wohin?).`,
+        subjs: [
+          [`Ich schiebe`, `I slide`],
+          [`Wir stellen`, `We put`],
+          [`Das Kind legt`, `The child puts`],
+          [`Mein Bruder stellt`, `My brother puts`],
+          [`Der Gast stellt`, `The guest puts`]
+        ],
+        midDe: `den Koffer unter`, midEn: `the suitcase under the`, endDe: `.`,
+        nouns: [`Bett`, `Tisch`, `Stuhl`, `Sitzbank`, `Sofa`]
+      },
+      {
+        cat: `wech_akk`, prep: `vor`,
+        why: `"vor" + Akkusativ: moving or parking something in front of a place (Wohin?).`,
+        subjs: [
+          [`Ich stelle`, `I park`],
+          [`Wir stellen`, `We park`],
+          [`Mein Nachbar stellt`, `My neighbour parks`],
+          [`Die Studenten stellen`, `The students park`],
+          [`Anna stellt`, `Anna parks`]
+        ],
+        midDe: `das Fahrrad vor`, midEn: `the bicycle in front of the`, endDe: `.`,
+        nouns: [`Tür`, `Haus`, `Eingang`, `Bäckerei`, `Bahnhof`, `Garage`]
+      },
+      {
+        cat: `wech_akk`, prep: `hinter`,
+        why: `"hinter" + Akkusativ: moving an item behind something (Wohin?).`,
+        subjs: [
+          [`Ich stelle`, `I put`],
+          [`Wir stellen`, `We put`],
+          [`Der Hausmeister stellt`, `The caretaker puts`],
+          [`Mein Vater schiebt`, `My father pushes`],
+          [`Sie stellt`, `She puts`]
+        ],
+        midDe: `die Kiste hinter`, midEn: `the box behind the`, endDe: `.`,
+        nouns: [`Tür`, `Schrank`, `Sofa`, `Regal`, `Vorhang`]
+      },
+      {
+        cat: `wech_akk`, prep: `neben`,
+        why: `"neben" + Akkusativ: placing something beside another object (Wohin?).`,
+        subjs: [
+          [`Ich stelle`, `I place`],
+          [`Wir stellen`, `We place`],
+          [`Er rückt`, `He moves`],
+          [`Meine Mutter stellt`, `My mother places`],
+          [`Die Helfer stellen`, `The helpers place`]
+        ],
+        midDe: `den Stuhl neben`, midEn: `the chair next to the`, endDe: `.`,
+        nouns: [`Tisch`, `Sofa`, `Schrank`, `Fenster`, `Lampe`, `Bett`]
+      },
+      {
+        cat: `wech_akk`, prep: `über`,
+        why: `"über" + Akkusativ: hanging/mounting something above a spot (Wohin?).`,
+        subjs: [
+          [`Ich hänge`, `I hang`],
+          [`Wir hängen`, `We hang`],
+          [`Der Elektriker montiert`, `The electrician mounts`],
+          [`Mein Bruder hängt`, `My brother hangs`],
+          [`Das Paar hängt`, `The couple hangs`]
+        ],
+        midDe: `die Lampe über`, midEn: `the lamp above the`, endDe: `.`,
+        nouns: [`Tisch`, `Bett`, `Sofa`, `Schreibtisch`, `Kommode`]
+      },
+      {
+        cat: `wech_akk`, prep: `zwischen`,
+        why: `"zwischen" + Akkusativ: placing an item between two things (Wohin?).`,
+        subjs: [
+          [`Ich stelle`, `I place`],
+          [`Wir stellen`, `We place`],
+          [`Die Designerin setzt`, `The designer places`],
+          [`Mein Vater schiebt`, `My father slides`],
+          [`Sie stellt`, `She places`]
+        ],
+        midDe: `den kleinen Tisch zwischen`, midEn: `the small table between the`, endDe: `.`,
+        nouns: [`SesselPl`, `StühlePl`, `RegalePl`, `FensterPl`, `BettenPl`]
+      },
+
+      // --- WECHSELPRÄPOSITIONEN (Wo? -> DATIV) ---
+      {
+        cat: `wech_dat`, prep: `in`,
+        why: `"in" takes Dativ here because the verb describes a fixed location (Wo?).`,
+        subjs: [
+          [`Ich bin`, `I am`],
+          [`Wir arbeiten`, `We work`],
+          [`Mein Kollege wartet`, `My colleague is waiting`],
+          [`Die Gäste sitzen`, `The guests are sitting`],
+          [`Frau Sommer ist`, `Ms Sommer is`]
+        ],
+        midDe: `gerade in`, midEn: `right now in the`, endDe: `.`,
+        nouns: [`Büro`, `Küche`, `Café`, `Bibliothek`, `Hotel`, `Wartezimmer`, `Rathaus`]
+      },
+      {
+        cat: `wech_dat`, prep: `auf`,
+        why: `"auf" + Dativ: an item resting in a static position on a surface (Wo?).`,
+        subjs: [
+          [`Das Formular liegt`, `The form is lying`],
+          [`Die Schlüssel liegen`, `The keys are lying`],
+          [`Die Tasse steht`, `The cup is standing`],
+          [`Mein Handy liegt`, `My mobile phone is lying`],
+          [`Die Zeitung liegt`, `The newspaper is lying`]
+        ],
+        midDe: `schon auf`, midEn: `already on the`, endDe: `.`,
+        nouns: [`Tisch`, `Schreibtisch`, `Regal`, `Theke`, `Kommode`, `Sofa`]
+      },
+      {
+        cat: `wech_dat`, prep: `an`,
+        why: `"an" + Dativ: a static item attached to a vertical surface (Wo?).`,
+        subjs: [
+          [`Das Bild hängt`, `The picture is hanging`],
+          [`Der Kalender hängt`, `The calendar is hanging`],
+          [`Das Poster hängt`, `The poster is hanging`],
+          [`Die Uhr hängt`, `The clock is hanging`],
+          [`Der Zettel klebt`, `The note is stuck`]
+        ],
+        midDe: `an`, midEn: `on the`, endDe: `.`,
+        nouns: [`Wand`, `Tür`, `Tafel`, `Schrank`, `Pinnwand`]
+      },
+      {
+        cat: `wech_dat`, prep: `an`,
+        why: `"an" + Dativ: being positioned at a spot (Wo?).`,
+        subjs: [
+          [`Ich sitze`, `I am sitting`],
+          [`Wir stehen`, `We are standing`],
+          [`Der Student sitzt`, `The student is sitting`],
+          [`Die Kundin wartet`, `The customer is waiting`],
+          [`Mein Chef arbeitet`, `My boss is working`]
+        ],
+        midDe: `ruhig an`, midEn: `quietly at the`, endDe: `.`,
+        nouns: [`Tisch`, `Schreibtisch`, `Fenster`, `Kasse`, `Schalter`]
+      },
+      {
+        cat: `wech_dat`, prep: `unter`,
+        why: `"unter" + Dativ: static location underneath furniture (Wo?).`,
+        subjs: [
+          [`Die Katze schläft`, `The cat is sleeping`],
+          [`Der Ball liegt`, `The ball is lying`],
+          [`Die Schuhe stehen`, `The shoes are standing`],
+          [`Der Rucksack liegt`, `The rucksack is lying`],
+          [`Der Teppich liegt`, `The rug is lying`]
+        ],
+        midDe: `unter`, midEn: `under the`, endDe: `.`,
+        nouns: [`Tisch`, `Bett`, `Sofa`, `Stuhl`, `Schreibtisch`]
+      },
+      {
+        cat: `wech_dat`, prep: `vor`,
+        why: `"vor" + Dativ: waiting or standing in front of a place (Wo?).`,
+        subjs: [
+          [`Ich warte`, `I am waiting`],
+          [`Wir stehen`, `We are standing`],
+          [`Das Taxi hält`, `The taxi is stopping`],
+          [`Die Leute warten`, `The people are waiting`],
+          [`Der Hund sitzt`, `The dog is sitting`]
+        ],
+        midDe: `schon vor`, midEn: `already in front of the`, endDe: `.`,
+        nouns: [`Eingang`, `Tür`, `Bahnhof`, `Post`, `Kino`, `Rathaus`]
+      },
+      {
+        cat: `wech_dat`, prep: `hinter`,
+        why: `"hinter" + Dativ: static position behind a building (Wo?).`,
+        subjs: [
+          [`Der Garten liegt`, `The garden lies`],
+          [`Der Parkplatz ist`, `The car park is`],
+          [`Die Bushaltestelle steht`, `The bus stop is`],
+          [`Der Hof befindet sich`, `The courtyard is located`],
+          [`Die Garage steht`, `The garage stands`]
+        ],
+        midDe: `direkt hinter`, midEn: `directly behind the`, endDe: `.`,
+        nouns: [`Haus`, `Schule`, `Supermarkt`, `Kirche`, `Hotel`]
+      },
+      {
+        cat: `wech_dat`, prep: `neben`,
+        why: `"neben" + Dativ: static location next to another building (Wo?).`,
+        subjs: [
+          [`Die Apotheke ist`, `The pharmacy is`],
+          [`Das Café liegt`, `The café is located`],
+          [`Die Bank befindet sich`, `The bank is located`],
+          [`Der Kiosk steht`, `The kiosk stands`],
+          [`Die Bäckerei ist`, `The bakery is`]
+        ],
+        midDe: `genau neben`, midEn: `right next to the`, endDe: `.`,
+        nouns: [`Bahnhof`, `Post`, `Rathaus`, `Hotel`, `Museum`, `Schule`]
+      },
+      {
+        cat: `wech_dat`, prep: `über`,
+        why: `"über" + Dativ: hanging statically above something (Wo?).`,
+        subjs: [
+          [`Die Lampe hängt`, `The lamp is hanging`],
+          [`Das Regal hängt`, `The shelf is hanging`],
+          [`Der Spiegel hängt`, `The mirror is hanging`],
+          [`Das Bild hängt`, `The picture is hanging`],
+          [`Die Uhr hängt`, `The clock is hanging`]
+        ],
+        midDe: `über`, midEn: `above the`, endDe: `.`,
+        nouns: [`Tisch`, `Sofa`, `Bett`, `Schreibtisch`, `Kommode`]
+      },
+      {
+        cat: `wech_dat`, prep: `zwischen`,
+        why: `"zwischen" + Dativ: static position between two objects (Wo?).`,
+        subjs: [
+          [`Die Lampe steht`, `The lamp is standing`],
+          [`Der Stuhl steht`, `The chair is standing`],
+          [`Der kleine Tisch steht`, `The small table is standing`],
+          [`Die Pflanze steht`, `The plant is standing`],
+          [`Der Teppich liegt`, `The rug is lying`]
+        ],
+        midDe: `zwischen`, midEn: `between the`, endDe: `.`,
+        nouns: [`SesselPl`, `RegalePl`, `FensterPl`, `SofasPl`, `SchränkePl`]
+      }
+    ];
+
+    // =========================================================================
+    // 3. DETERMINISTIC 1,000-QUESTION GENERATOR
+    // =========================================================================
+    const AKK_ART = { m: `den`, f: `die`, n: `das`, p: `die` };
+    const DAT_ART = { m: `dem`, f: `der`, n: `dem`, p: `den` };
+    const NOM_ART = { m: `der`, f: `die`, n: `das`, p: `die` };
+    const GENDER_LABEL = { m: `Masculine (der)`, f: `Feminine (die)`, n: `Neuter (das)`, p: `Plural (die)` };
+
+    const CONTRACTION_NOTES = {
+      'in|dem': `Note: "in dem" commonly contracts to "im".`,
+      'in|das': `Note: "in das" commonly contracts to "ins".`,
+      'an|dem': `Note: "an dem" commonly contracts to "am".`,
+      'an|das': `Note: "an das" commonly contracts to "ans".`,
+      'zu|dem': `Note: "zu dem" commonly contracts to "zum".`,
+      'zu|der': `Note: "zu der" commonly contracts to "zur".`,
+      'bei|dem': `Note: "bei dem" commonly contracts to "beim".`,
+      'von|dem': `Note: "von dem" commonly contracts to "vom".`,
+      'auf|das': `Note: "auf das" commonly contracts to "aufs".`,
+      'für|das': `Note: "für das" commonly contracts to "fürs".`,
+      'durch|das': `Note: "durch das" commonly contracts to "durchs".`,
+      'um|das': `Note: "um das" commonly contracts to "ums".`
+    };
+
+    function seededShuffle(arr, seed) {
+      const copy = arr.slice();
+      let s = seed >>> 0;
+      for (let i = copy.length - 1; i > 0; i--) {
+        s = (s * 1664525 + 1013904223) >>> 0;
+        const j = s % (i + 1);
+        const tmp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = tmp;
+      }
+      return copy;
+    }
+
+    function buildQuestionBank() {
+      const buckets = { akk: [], dat: [], wech_akk: [], wech_dat: [] };
+
+      FRAMES.forEach((f) => {
+        const isDat = (f.cat === `dat` || f.cat === `wech_dat`);
+        const caseName = isDat ? `Dativ` : `Akkusativ`;
+        const catGroup = (f.cat === `wech_akk` || f.cat === `wech_dat`) ? `wech` : f.cat;
+
+        f.subjs.forEach(([sDe, sEn]) => {
+          f.nouns.forEach((nKey) => {
+            const noun = NOUNS[nKey];
+            if (!noun) return;
+            const art = isDat ? DAT_ART[noun.g] : AKK_ART[noun.g];
+            const nounDisplay = (isDat && noun.g === `p` && noun.datPl) ? noun.datPl : noun.de;
+            const contraction = CONTRACTION_NOTES[`${f.prep}|${art}`] || ``;
+            const plNote = (isDat && noun.g === `p`) ? ` Dativ plural adds -n to most nouns.` : ``;
+
+            buckets[f.cat].push({
+              cat: catGroup,
+              subCat: f.cat,
+              caseName: caseName,
+              prep: f.prep,
+              beforeBlank: `${sDe} ${f.midDe}`,
+              afterBlank: `${nounDisplay}${f.endDe}`,
+              en: `${sEn} ${f.midEn} ${noun.en}.`,
+              answer: art,
+              nounDe: `${NOM_ART[noun.g]} ${noun.de}`,
+              genderLabel: GENDER_LABEL[noun.g],
+              explanation: `${f.why} "${noun.de}" is ${GENDER_LABEL[noun.g]}, which becomes "${art} ${nounDisplay}" in ${caseName}.${plNote}${contraction ? ` ` + contraction : ``}`
+            });
+          });
+        });
+      });
+
+      const akkPicked = seededShuffle(buckets.akk, 101).slice(0, 300);
+      const datPicked = seededShuffle(buckets.dat, 202).slice(0, 350);
+      const wAkkPicked = seededShuffle(buckets.wech_akk, 303).slice(0, 175);
+      const wDatPicked = seededShuffle(buckets.wech_dat, 404).slice(0, 175);
+
+      const combined = seededShuffle(
+        akkPicked.concat(datPicked, wAkkPicked, wDatPicked),
+        909
+      );
+
+      return combined.map((q, idx) => Object.assign({ id: idx + 1 }, q));
+    }
+
+    const ALL_QUESTIONS = buildQuestionBank();
+
+    // =========================================================================
+    // 4. FLASHCARDS DECK (Case names hidden on front!)
+    // =========================================================================
+    const FLASHCARDS = [
+      // Akkusativ Prepositions
+      { id: `p-durch`, type: `prep`, frontTag: `Preposition`, term: `durch`, prompt: `Meaning: through · Which case does this preposition govern?`, backCase: `Akkusativ`, answer: `durch + Akkusativ`, detail: `Always takes the Akkusativ case (den / die / das / die).`, example: `Wir gehen durch den Park. (We walk through the park.)` },
+      { id: `p-fuer`, type: `prep`, frontTag: `Preposition`, term: `für`, prompt: `Meaning: for · Which case does this preposition govern?`, backCase: `Akkusativ`, answer: `für + Akkusativ`, detail: `Always takes the Akkusativ case (einen / eine / ein). Contraction: fürs = für das.`, example: `Das Geschenk ist für meinen Bruder.` },
+      { id: `p-gegen`, type: `prep`, frontTag: `Preposition`, term: `gegen`, prompt: `Meaning: against, around · Which case does this preposition govern?`, backCase: `Akkusativ`, answer: `gegen + Akkusativ`, detail: `Always takes the Akkusativ case.`, example: `Er fährt gegen die Wand. / Wir sind gegen den Plan.` },
+      { id: `p-ohne`, type: `prep`, frontTag: `Preposition`, term: `ohne`, prompt: `Meaning: without · Which case does this preposition govern?`, backCase: `Akkusativ`, answer: `ohne + Akkusativ`, detail: `Always takes the Akkusativ case.`, example: `Ich reise nie ohne meinen Pass.` },
+      { id: `p-um`, type: `prep`, frontTag: `Preposition`, term: `um`, prompt: `Meaning: around, at (time) · Which case does this preposition govern?`, backCase: `Akkusativ`, answer: `um + Akkusativ`, detail: `Always takes the Akkusativ case. Contraction: ums = um das.`, example: `Wir sitzen um den Tisch. / Der Zug kommt um 8 Uhr.` },
+      { id: `p-bis`, type: `prep`, frontTag: `Preposition`, term: `bis`, prompt: `Meaning: until, up to · Which case does this preposition govern?`, backCase: `Akkusativ`, answer: `bis + Akkusativ`, detail: `Takes the Akkusativ case (often used without an article or paired with zu + Dativ).`, example: `Bis nächsten Montag! / Bis zum Bahnhof.` },
+      { id: `p-entlang`, type: `prep`, frontTag: `Preposition`, term: `entlang`, prompt: `Meaning: along · Which case does it govern when placed after the noun?`, backCase: `Akkusativ`, answer: `Akkusativ + entlang`, detail: `Placed after the noun, entlang takes the Akkusativ case.`, example: `Wir gehen den Fluss entlang.` },
+
+      // Dativ Prepositions
+      { id: `p-aus`, type: `prep`, frontTag: `Preposition`, term: `aus`, prompt: `Meaning: from, out of · Which case does this preposition govern?`, backCase: `Dativ`, answer: `aus + Dativ`, detail: `Always takes the Dativ case (dem / der / dem / den + -n).`, example: `Sie kommt aus der Schweiz. / Er geht aus dem Haus.` },
+      { id: `p-ausser`, type: `prep`, frontTag: `Preposition`, term: `außer`, prompt: `Meaning: apart from, except · Which case does this preposition govern?`, backCase: `Dativ`, answer: `außer + Dativ`, detail: `Always takes the Dativ case.`, example: `Alle sind da, außer dem Chef.` },
+      { id: `p-bei`, type: `prep`, frontTag: `Preposition`, term: `bei`, prompt: `Meaning: at, near, with · Which case does this preposition govern?`, backCase: `Dativ`, answer: `bei + Dativ`, detail: `Always takes the Dativ case. Contraction: beim = bei dem.`, example: `Ich war beim Arzt. / Potsdam liegt bei Berlin.` },
+      { id: `p-gegenueber`, type: `prep`, frontTag: `Preposition`, term: `gegenüber`, prompt: `Meaning: opposite, across from · Which case does this preposition govern?`, backCase: `Dativ`, answer: `gegenüber + Dativ`, detail: `Always takes the Dativ case.`, example: `Die Post liegt gegenüber dem Bahnhof.` },
+      { id: `p-mit`, type: `prep`, frontTag: `Preposition`, term: `mit`, prompt: `Meaning: with, by (transport) · Which case does this preposition govern?`, backCase: `Dativ`, answer: `mit + Dativ`, detail: `Always takes the Dativ case.`, example: `Sie fährt mit dem Fahrrad zur Arbeit.` },
+      { id: `p-nach`, type: `prep`, frontTag: `Preposition`, term: `nach`, prompt: `Meaning: after, to (cities/countries) · Which case does this preposition govern?`, backCase: `Dativ`, answer: `nach + Dativ`, detail: `Always takes the Dativ case.`, example: `Nach dem Unterricht fahren wir nach Berlin.` },
+      { id: `p-seit`, type: `prep`, frontTag: `Preposition`, term: `seit`, prompt: `Meaning: since, for (time) · Which case does this preposition govern?`, backCase: `Dativ`, answer: `seit + Dativ`, detail: `Always takes the Dativ case for ongoing time from the past.`, example: `Ich warte seit einer halben Stunde.` },
+      { id: `p-von`, type: `prep`, frontTag: `Preposition`, term: `von`, prompt: `Meaning: from, of, by · Which case does this preposition govern?`, backCase: `Dativ`, answer: `von + Dativ`, detail: `Always takes the Dativ case. Contraction: vom = von dem.`, example: `Das Geschenk ist von meinem Bruder.` },
+      { id: `p-zu`, type: `prep`, frontTag: `Preposition`, term: `zu`, prompt: `Meaning: to · Which case does this preposition govern?`, backCase: `Dativ`, answer: `zu + Dativ`, detail: `Always takes the Dativ case. Contractions: zum = zu dem, zur = zu der.`, example: `Ich gehe zum Supermarkt und zur Apotheke.` },
+
+      // Articles & Pronouns (NO case names on front!)
+      { id: `a-den`, type: `art`, frontTag: `Definite Article`, term: `den`, prompt: `Which case(s) and gender/number use the article "den"?`, backCase: `Akkusativ & Dativ`, answer: `Akkusativ Masc. / Dativ Plural`, detail: `Masculine singular direct object (den Mann) AND plural indirect object (+ -n on noun, den Kindern).`, example: `Ich sehe den Mann. / Ich helfe den Kindern.` },
+      { id: `a-die`, type: `art`, frontTag: `Definite Article`, term: `die`, prompt: `Which cases and genders/numbers use the article "die"?`, backCase: `Nominativ & Akkusativ`, answer: `Feminine Sg. & All Plurals`, detail: `Used in Nominativ and Akkusativ for feminine singular (die Frau) and all plurals (die Bücher).`, example: `Die Frau liest die Zeitung. / Wir kaufen die Bücher.` },
+      { id: `a-das`, type: `art`, frontTag: `Definite Article`, term: `das`, prompt: `Which cases and gender use the article "das"?`, backCase: `Nominativ & Akkusativ`, answer: `Neuter Singular (Nom. / Akk.)`, detail: `Neuter definite article stays "das" in both Nominativ and Akkusativ.`, example: `Das Kind öffnet das Fenster.` },
+      { id: `a-dem`, type: `art`, frontTag: `Definite Article`, term: `dem`, prompt: `Which case and genders use the article "dem"?`, backCase: `Dativ`, answer: `Dativ Masculine & Neuter`, detail: `Both masculine (der → dem) and neuter (das → dem) take "dem" in the Dativ case.`, example: `Er fährt mit dem Bus und dem Fahrrad.` },
+      { id: `a-der`, type: `art`, frontTag: `Definite Article`, term: `der`, prompt: `Which cases and genders use the article "der"?`, backCase: `Nominativ & Dativ`, answer: `Nom. Masc. / Dativ Fem.`, detail: `Subject masculine (der Mann), OR Dativ feminine (die Frau → der Frau).`, example: `Der Mann hilft der Frau.` },
+      { id: `a-akk-def`, type: `art`, frontTag: `Direct Object Drill`, term: `der · die · das · die → ?`, prompt: `Transform all four definite articles for a direct object (Wen oder was?) or after "für / ohne / durch".`, backCase: `Akkusativ`, answer: `den (M) · die (F) · das (N) · die (Pl)`, detail: `Only the masculine singular changes in Akkusativ (der → den). Feminine, neuter, and plural stay the same.`, example: `für den Plan · für die Reise · für das Kind · für die Gäste` },
+      { id: `a-akk-indef`, type: `art`, frontTag: `Indefinite & Negative`, term: `ein · eine · ein · keine → ?`, prompt: `Transform indefinite and negative articles for a direct object (Wen oder was?).`, backCase: `Akkusativ`, answer: `einen / keinen (M) · eine / keine (F) · ein / kein (N) · keine (Pl)`, detail: `Masculine adds -en (einen, keinen). Feminine, neuter, and plural remain unchanged.`, example: `Ich habe einen Stift, eine Tasche, ein Buch und keine Fragen.` },
+      { id: `a-akk-poss`, type: `art`, frontTag: `Possessive Drill`, term: `mein · meine · mein · meine → ?`, prompt: `Transform possessive articles ("my") for a direct object (Wen oder was?).`, backCase: `Akkusativ`, answer: `meinen (M) · meine (F) · mein (N) · meine (Pl)`, detail: `All possessives (mein, dein, sein, ihr, unser, euer, Ihr) add -en for masculine singular.`, example: `Sie besucht meinen Bruder und meine Schwester.` },
+      { id: `a-akk-pron`, type: `art`, frontTag: `Personal Pronouns`, term: `ich, du, er, sie, es, wir, ihr, sie, Sie → ?`, prompt: `Recall all 9 personal pronouns for a direct object (Wen oder was?).`, backCase: `Akkusativ`, answer: `mich · dich · ihn · sie · es · uns · euch · sie · Sie`, detail: `Used as direct objects and after durch, für, gegen, ohne, um.`, example: `Das Geschenk ist für dich / für ihn / für uns.` },
+      { id: `a-dat-def`, type: `art`, frontTag: `Indirect Object Drill`, term: `der · die · das · die → ?`, prompt: `Transform all four definite articles for an indirect object (Wem?) or after "mit / aus / zu".`, backCase: `Dativ`, answer: `dem (M) · der (F) · dem (N) · den + -n (Pl)`, detail: `All genders change: M/N → dem, F → der, Plural → den (+ -n on noun unless ending in -n or -s).`, example: `mit dem Mann · mit der Frau · mit dem Kind · mit den Kindern` },
+      { id: `a-dat-indef`, type: `art`, frontTag: `Indefinite & Negative`, term: `ein · eine · ein · keine → ?`, prompt: `Transform indefinite and negative articles for an indirect object (Wem?).`, backCase: `Dativ`, answer: `einem / keinem (M) · einer / keiner (F) · einem / keinem (N) · keinen + -n (Pl)`, detail: `M/N take -em, F takes -er, Plural takes -en (+ -n on noun).`, example: `nach einem Monat · nach einer Woche · mit keinen Problemen` },
+      { id: `a-dat-poss`, type: `art`, frontTag: `Possessive Drill`, term: `mein · meine · mein · meine → ?`, prompt: `Transform possessive articles ("my") for an indirect object (Wem?).`, backCase: `Dativ`, answer: `meinem (M) · meiner (F) · meinem (N) · meinen + -n (Pl)`, detail: `Possessives follow the exact same -em / -er / -em / -en endings.`, example: `Ich fahre mit meinem Bruder und meiner Mutter.` },
+      { id: `a-dat-pron`, type: `art`, frontTag: `Personal Pronouns`, term: `ich, du, er, sie, es, wir, ihr, sie, Sie → ?`, prompt: `Recall all 9 personal pronouns for an indirect object (Wem?).`, backCase: `Dativ`, answer: `mir · dir · ihm · ihr · ihm · uns · euch · ihnen · Ihnen`, detail: `Used as indirect objects, with helfen/danken/gehören, and after aus/bei/mit/nach/seit/von/zu.`, example: `Wie geht es dir? / Ich danke Ihnen! / Er hilft mir.` },
+
+      // Contractions
+      { id: `c-im-ins`, type: `contr`, frontTag: `Contraction Pair`, term: `im  vs.  ins`, prompt: `Expand both contractions and state which answers "Wo?" vs "Wohin?".`, backCase: `Wechselpräposition`, answer: `im = in + dem · ins = in + das`, detail: `im (Dativ) indicates static location (Wo?). ins (Akkusativ) indicates movement into (Wohin?).`, example: `Ich bin im Kino. (Wo?) / Ich gehe ins Kino. (Wohin?)` },
+      { id: `c-am-ans`, type: `contr`, frontTag: `Contraction Pair`, term: `am  vs.  ans`, prompt: `Expand both contractions and state their grammatical cases.`, backCase: `Wechselpräposition`, answer: `am = an + dem · ans = an + das`, detail: `am (Dativ) for position/days/dates; ans (Akkusativ) for movement towards.`, example: `Am Montag sitze ich am Fenster. / Ich gehe ans Fenster.` },
+      { id: `c-zum-zur`, type: `contr`, frontTag: `Contraction Pair`, term: `zum  vs.  zur`, prompt: `Expand both contractions and identify their noun genders.`, backCase: `Dativ`, answer: `zum = zu + dem (M/N) · zur = zu + der (F)`, detail: `Since "zu" always takes Dativ, masculine/neuter use "zum" and feminine uses "zur".`, example: `Ich gehe zum Bahnhof (m), zum Büro (n) und zur Post (f).` },
+      { id: `c-beim-vom`, type: `contr`, frontTag: `Contraction Pair`, term: `beim  &  vom`, prompt: `Expand both contractions and identify the case.`, backCase: `Dativ`, answer: `beim = bei + dem · vom = von + dem`, detail: `Used with masculine and neuter nouns after Dativ prepositions "bei" and "von".`, example: `Ich bin beim Arzt. / Er kommt vom Flughafen.` },
+      { id: `c-aufs-fuers`, type: `contr`, frontTag: `Contraction Group`, term: `aufs · fürs · durchs · ums`, prompt: `Expand these contractions and identify the gender & case of the noun.`, backCase: `Akkusativ`, answer: `auf/für/durch/um + das (Neuter)`, detail: `Neuter definite article "das" merges with these prepositions in the Akkusativ case.`, example: `Sie legt das Buch aufs Regal. / Danke fürs Geschenk!` }
+    ];
+
+    // =========================================================================
+    // 5. APPLICATION STATE & PERSISTENCE
+    // =========================================================================
+    const DEFAULT_STATE = {
+      mode: `quiz`,
+      category: `all`,
+      prep: `all`,
+      order: `shuffled`,
+      currentIdx: 0,
+      answeredIds: {},
+      correctCount: 0,
+      totalAnswered: 0,
+      streak: 0,
+      wrongIds: [],
+      fcFilter: `all`,
+      fcIndex: 0,
+      fcStatus: {}
+    };
+
+    let appState = Object.assign({}, DEFAULT_STATE);
+    let activePool = ALL_QUESTIONS.slice();
+    let activeDeck = FLASHCARDS.slice();
+    let currentQuestionAnswered = false;
+    let isFlashcardFlipped = false;
+
+    function saveState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        window.notebookAppApi.setAppState(appState).catch(() => {});
+      }
+    }
+
+    function populatePrepDropdown() {
+      const sel = document.getElementById(`filter-prep`);
+      if (!sel) return;
+      const preps = Array.from(new Set(ALL_QUESTIONS.map((q) => q.prep))).sort((a, b) => a.localeCompare(b, `de`));
+      preps.forEach((p) => {
+        const opt = document.createElement(`option`);
+        opt.value = p;
+        opt.textContent = p;
+        sel.appendChild(opt);
+      });
+    }
+
+    function rebuildActivePool(preserveIdx) {
+      let filtered = ALL_QUESTIONS;
+
+      if (appState.category === `mistakes`) {
+        const wrongSet = new Set(appState.wrongIds);
+        filtered = filtered.filter((q) => wrongSet.has(q.id));
+      } else if (appState.category !== `all`) {
+        filtered = filtered.filter((q) => q.cat === appState.category);
+      }
+
+      if (appState.prep !== `all`) {
+        filtered = filtered.filter((q) => q.prep === appState.prep);
+      }
+
+      if (appState.order === `sequential`) {
+        filtered = filtered.slice().sort((a, b) => a.id - b.id);
+      } else {
+        filtered = seededShuffle(filtered, 777 + (appState.shuffleSalt || 0));
+      }
+
+      activePool = filtered;
+      if (!preserveIdx || appState.currentIdx >= activePool.length) {
+        appState.currentIdx = 0;
+      }
+    }
+
+    function updateHeaderStats() {
+      const accEl = document.getElementById(`stat-accuracy`);
+      const ansEl = document.getElementById(`stat-answered`);
+      const strEl = document.getElementById(`stat-streak`);
+
+      const pct = appState.totalAnswered > 0
+        ? Math.round((appState.correctCount / appState.totalAnswered) * 100)
+        : 0;
+      const uniqueDone = Object.keys(appState.answeredIds).length;
+
+      if (accEl) accEl.textContent = `${pct}%`;
+      if (ansEl) ansEl.textContent = `${uniqueDone} / ${ALL_QUESTIONS.length}`;
+      if (strEl) strEl.textContent = String(appState.streak);
+    }
+
+    function renderQuizQuestion() {
+      const poolBadge = document.getElementById(`pool-badge`);
+      const counterEl = document.getElementById(`q-counter`);
+      const catPill = document.getElementById(`q-category-pill`);
+      const progFill = document.getElementById(`quiz-progress-fill`);
+      const sentDe = document.getElementById(`q-sentence-de`);
+      const sentEn = document.getElementById(`q-sentence-en`);
+      const hintBtn = document.getElementById(`btn-hint`);
+      const hintTxt = document.getElementById(`q-hint-text`);
+      const feedbackPanel = document.getElementById(`feedback-panel`);
+      const prevBtn = document.getElementById(`btn-prev-q`);
+      const nextBtn = document.getElementById(`btn-next-q`);
+
+      if (poolBadge) {
+        poolBadge.textContent = `Pool: ${activePool.length} ${activePool.length === 1 ? `question` : `questions`}`;
+      }
+
+      // Empty state for Review Mistakes
+      if (activePool.length === 0) {
+        if (counterEl) counterEl.textContent = `No questions in this filter`;
+        if (catPill) {
+          catPill.className = `pill`;
+          catPill.textContent = `Empty`;
+        }
+        if (progFill) progFill.style.width = `0%`;
+        if (sentDe) sentDe.innerHTML = `No mistakes to review right now.`;
+        if (sentEn) sentEn.textContent = `Switch back to "All Categories" or choose another preposition to continue practising.`;
+        if (hintBtn) hintBtn.classList.add(`hidden`);
+        if (hintTxt) hintTxt.classList.add(`hidden`);
+        if (feedbackPanel) feedbackPanel.className = `feedback-panel`;
+        document.querySelectorAll(`.choice-btn`).forEach((b) => {
+          b.disabled = true;
+          b.classList.remove(`is-correct`, `is-wrong`);
+        });
+        if (prevBtn) prevBtn.disabled = true;
+        if (nextBtn) nextBtn.disabled = true;
+        return;
+      }
+
+      const q = activePool[appState.currentIdx];
+      currentQuestionAnswered = false;
+
+      if (counterEl) {
+        counterEl.textContent = `Question ${appState.currentIdx + 1} of ${activePool.length} (#${q.id})`;
+      }
+      if (catPill) {
+        if (q.cat === `akk`) {
+          catPill.className = `pill pill-akk`;
+          catPill.textContent = `Akkusativ · "${q.prep}"`;
+        } else if (q.cat === `dat`) {
+          catPill.className = `pill pill-dat`;
+          catPill.textContent = `Dativ · "${q.prep}"`;
+        } else {
+          catPill.className = `pill pill-wech`;
+          catPill.textContent = `Wechselpräposition · "${q.prep}"`;
+        }
+      }
+      if (progFill) {
+        const pct = Math.round(((appState.currentIdx + 1) / activePool.length) * 100);
+        progFill.style.width = `${pct}%`;
+      }
+
+      if (sentDe) {
+        sentDe.innerHTML = `${q.beforeBlank} <span class="blank-slot" id="blank-slot">___</span> ${q.afterBlank}`;
+      }
+      if (sentEn) sentEn.textContent = q.en;
+
+      if (hintBtn) {
+        hintBtn.classList.remove(`hidden`);
+        hintBtn.textContent = `Show Noun Gender Hint`;
+      }
+      if (hintTxt) {
+        hintTxt.classList.add(`hidden`);
+        hintTxt.textContent = `Noun: ${q.nounDe} — ${q.genderLabel}`;
+      }
+
+      if (feedbackPanel) {
+        feedbackPanel.className = `feedback-panel`;
+      }
+
+      document.querySelectorAll(`.choice-btn`).forEach((btn) => {
+        btn.disabled = false;
+        btn.classList.remove(`is-correct`, `is-wrong`);
+      });
+
+      if (prevBtn) prevBtn.disabled = appState.currentIdx === 0;
+      if (nextBtn) {
+        nextBtn.disabled = false;
+        nextBtn.textContent = appState.currentIdx >= activePool.length - 1 ? `Restart Pool ↻` : `Next Question →`;
+      }
+    }
+
+    // =========================================================================
+    // 6. QUIZ INTERACTION HANDLERS (No auto-advance!)
+    // =========================================================================
+    function selectAnswer(chosen) {
+      if (activePool.length === 0 || currentQuestionAnswered) return;
+      const q = activePool[appState.currentIdx];
+      currentQuestionAnswered = true;
+
+      const isCorrect = (chosen === q.answer);
+      const slot = document.getElementById(`blank-slot`);
+      const feedbackPanel = document.getElementById(`feedback-panel`);
+      const feedbackTitle = document.getElementById(`feedback-title`);
+      const feedbackDetail = document.getElementById(`feedback-detail`);
+
+      if (slot) {
+        slot.textContent = q.answer;
+        slot.classList.add(isCorrect ? `is-correct` : `is-wrong`);
+      }
+
+      document.querySelectorAll(`.choice-btn`).forEach((btn) => {
+        btn.disabled = true;
+        const art = btn.getAttribute(`data-art`);
+        if (art === q.answer) {
+          btn.classList.add(`is-correct`);
+        } else if (art === chosen && !isCorrect) {
+          btn.classList.add(`is-wrong`);
+        }
+      });
+
+      if (feedbackPanel && feedbackTitle && feedbackDetail) {
+        feedbackPanel.className = `feedback-panel is-visible ${isCorrect ? `is-correct` : `is-wrong`}`;
+        feedbackTitle.textContent = isCorrect
+          ? `Correct! "${q.answer}" (${q.caseName})`
+          : `Not quite — the correct article is "${q.answer}" (${q.caseName}).`;
+        feedbackDetail.textContent = q.explanation;
+      }
+
+      appState.totalAnswered += 1;
+      appState.answeredIds[q.id] = isCorrect ? `ok` : `err`;
+      if (isCorrect) {
+        appState.correctCount += 1;
+        appState.streak += 1;
+        appState.wrongIds = appState.wrongIds.filter((id) => id !== q.id);
+      } else {
+        appState.streak = 0;
+        if (!appState.wrongIds.includes(q.id)) {
+          appState.wrongIds.push(q.id);
+        }
+      }
+
+      updateHeaderStats();
+      saveState();
+    }
+
+    function nextQuestion() {
+      if (activePool.length === 0) return;
+      if (appState.currentIdx < activePool.length - 1) {
+        appState.currentIdx += 1;
+      } else {
+        appState.currentIdx = 0;
+      }
+      renderQuizQuestion();
+      saveState();
+    }
+
+    function prevQuestion() {
+      if (activePool.length === 0 || appState.currentIdx <= 0) return;
+      appState.currentIdx -= 1;
+      renderQuizQuestion();
+      saveState();
+    }
+
+    function toggleHint() {
+      const hintTxt = document.getElementById(`q-hint-text`);
+      const hintBtn = document.getElementById(`btn-hint`);
+      if (!hintTxt || !hintBtn) return;
+      const hidden = hintTxt.classList.contains(`hidden`);
+      if (hidden) {
+        hintTxt.classList.remove(`hidden`);
+        hintBtn.textContent = `Hide Noun Gender Hint`;
+      } else {
+        hintTxt.classList.add(`hidden`);
+        hintBtn.textContent = `Show Noun Gender Hint`;
+      }
+    }
+
+    function applyQuizFilter() {
+      const catSel = document.getElementById(`filter-category`);
+      const prepSel = document.getElementById(`filter-prep`);
+      if (catSel) appState.category = catSel.value;
+      if (prepSel) appState.prep = prepSel.value;
+      rebuildActivePool(false);
+      renderQuizQuestion();
+      saveState();
+    }
+
+    function applyQuizOrder() {
+      const ordSel = document.getElementById(`filter-order`);
+      if (ordSel) appState.order = ordSel.value;
+      rebuildActivePool(false);
+      renderQuizQuestion();
+      saveState();
+    }
+
+    function reshuffleCurrentPool() {
+      appState.shuffleSalt = (appState.shuffleSalt || 0) + 1;
+      appState.order = `shuffled`;
+      const ordSel = document.getElementById(`filter-order`);
+      if (ordSel) ordSel.value = `shuffled`;
+      rebuildActivePool(false);
+      renderQuizQuestion();
+      saveState();
+    }
+
+    // =========================================================================
+    // 7. FLASHCARDS LOGIC (Zero case hints on card fronts!)
+    // =========================================================================
+    function rebuildFlashcardDeck(preserveIdx) {
+      let deck = FLASHCARDS;
+      if (appState.fcFilter === `prep`) {
+        deck = FLASHCARDS.filter((c) => c.type === `prep`);
+      } else if (appState.fcFilter === `art`) {
+        deck = FLASHCARDS.filter((c) => c.type === `art`);
+      } else if (appState.fcFilter === `contr`) {
+        deck = FLASHCARDS.filter((c) => c.type === `contr`);
+      } else if (appState.fcFilter === `review`) {
+        deck = FLASHCARDS.filter((c) => appState.fcStatus[c.id] === `review`);
+      }
+
+      if (appState.fcShuffleSalt) {
+        deck = seededShuffle(deck, 505 + appState.fcShuffleSalt);
+      }
+
+      activeDeck = deck;
+      if (!preserveIdx || appState.fcIndex >= activeDeck.length) {
+        appState.fcIndex = 0;
+      }
+    }
+
+    function renderFlashcard() {
+      const btn = document.getElementById(`flashcard-btn`);
+      const masteryBadge = document.getElementById(`fc-mastery-badge`);
+      const counterF = document.getElementById(`fc-counter`);
+      const counterB = document.getElementById(`fc-counter-back`);
+      const frontType = document.getElementById(`fc-front-type`);
+      const frontTerm = document.getElementById(`fc-front-term`);
+      const frontPrompt = document.getElementById(`fc-front-prompt`);
+      const backCase = document.getElementById(`fc-back-case`);
+      const backAnswer = document.getElementById(`fc-back-answer`);
+      const backDetail = document.getElementById(`fc-back-detail`);
+      const backExample = document.getElementById(`fc-back-example`);
+      const statusF = document.getElementById(`fc-status-front`);
+      const statusB = document.getElementById(`fc-status-back`);
+
+      const masteredTotal = Object.values(appState.fcStatus).filter((v) => v === `mastered`).length;
+      if (masteryBadge) {
+        masteryBadge.textContent = `${masteredTotal} / ${FLASHCARDS.length} mastered`;
+      }
+
+      isFlashcardFlipped = false;
+      if (btn) btn.classList.remove(`is-flipped`);
+
+      // Update filter button active styling
+      [`all`, `prep`, `art`, `contr`, `review`].forEach((f) => {
+        const fBtn = document.getElementById(`fc-filter-${f}`);
+        if (!fBtn) return;
+        if (appState.fcFilter === f) {
+          fBtn.classList.add(`btn-primary`);
+        } else {
+          fBtn.classList.remove(`btn-primary`);
+        }
+      });
+
+      if (activeDeck.length === 0) {
+        if (counterF) counterF.textContent = `0 cards`;
+        if (counterB) counterB.textContent = `0 cards`;
+        if (frontType) frontType.textContent = `Empty`;
+        if (frontTerm) frontTerm.textContent = `No cards marked for review`;
+        if (frontPrompt) frontPrompt.textContent = `Select "All Cards" above or mark challenging cards as "Mark for Review".`;
+        if (statusF) statusF.textContent = ``;
+        return;
+      }
+
+      const card = activeDeck[appState.fcIndex];
+      const countText = `Card ${appState.fcIndex + 1} of ${activeDeck.length}`;
+      const st = appState.fcStatus[card.id];
+      const statusLabel = st === `mastered` ? `Mastered ✓` : (st === `review` ? `Needs Review` : `Unreviewed`);
+
+      if (counterF) counterF.textContent = countText;
+      if (counterB) counterB.textContent = countText;
+      if (frontType) frontType.textContent = card.frontTag;
+      if (frontTerm) frontTerm.textContent = card.term;
+      if (frontPrompt) frontPrompt.textContent = card.prompt;
+
+      if (backCase) backCase.textContent = card.backCase;
+      if (backAnswer) backAnswer.textContent = card.answer;
+      if (backDetail) backDetail.textContent = card.detail;
+      if (backExample) backExample.textContent = card.example;
+
+      if (statusF) statusF.textContent = statusLabel;
+      if (statusB) statusB.textContent = statusLabel;
+    }
+
+    function flipFlashcard() {
+      if (activeDeck.length === 0) return;
+      isFlashcardFlipped = !isFlashcardFlipped;
+      const btn = document.getElementById(`flashcard-btn`);
+      if (btn) btn.classList.toggle(`is-flipped`, isFlashcardFlipped);
+    }
+
+    function nextFlashcard() {
+      if (activeDeck.length === 0) return;
+      appState.fcIndex = (appState.fcIndex + 1) % activeDeck.length;
+      renderFlashcard();
+      saveState();
+    }
+
+    function prevFlashcard() {
+      if (activeDeck.length === 0) return;
+      appState.fcIndex = (appState.fcIndex - 1 + activeDeck.length) % activeDeck.length;
+      renderFlashcard();
+      saveState();
+    }
+
+    function setFlashcardFilter(filterName) {
+      appState.fcFilter = filterName;
+      rebuildFlashcardDeck(false);
+      renderFlashcard();
+      saveState();
+    }
+
+    function shuffleFlashcards() {
+      appState.fcShuffleSalt = (appState.fcShuffleSalt || 0) + 1;
+      rebuildFlashcardDeck(false);
+      renderFlashcard();
+      saveState();
+    }
+
+    function markFlashcard(statusVal) {
+      if (activeDeck.length === 0) return;
+      const card = activeDeck[appState.fcIndex];
+      appState.fcStatus[card.id] = statusVal;
+      nextFlashcard();
+      saveState();
+    }
+
+    // =========================================================================
+    // 8. MODE SWITCHING, RESET & KEYBOARD SHORTCUTS
+    // =========================================================================
+    function switchMode(mode) {
+      appState.mode = mode;
+      const quizPanel = document.getElementById(`panel-quiz`);
+      const fcPanel = document.getElementById(`panel-flashcards`);
+      const tabQuiz = document.getElementById(`tab-quiz`);
+      const tabFc = document.getElementById(`tab-flashcards`);
+
+      if (mode === `flashcards`) {
+        if (quizPanel) quizPanel.classList.add(`hidden`);
+        if (fcPanel) fcPanel.classList.remove(`hidden`);
+        if (tabQuiz) tabQuiz.classList.remove(`btn-primary`);
+        if (tabFc) tabFc.classList.add(`btn-primary`);
+        renderFlashcard();
+      } else {
+        if (fcPanel) fcPanel.classList.add(`hidden`);
+        if (quizPanel) quizPanel.classList.remove(`hidden`);
+        if (tabFc) tabFc.classList.remove(`btn-primary`);
+        if (tabQuiz) tabQuiz.classList.add(`btn-primary`);
+        renderQuizQuestion();
+      }
+      saveState();
+    }
+
+    function handleResetProgress(btn) {
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `Click again to reset`;
+        setTimeout(() => {
+          if (btn.dataset.armed === `true`) {
+            btn.dataset.armed = `false`;
+            btn.textContent = `Reset Progress`;
+          }
+        }, 3500);
+        return;
+      }
+
+      btn.dataset.armed = `false`;
+      btn.textContent = `Reset Progress`;
+
+      appState = Object.assign({}, DEFAULT_STATE, { mode: appState.mode });
+      const catSel = document.getElementById(`filter-category`);
+      const prepSel = document.getElementById(`filter-prep`);
+      const ordSel = document.getElementById(`filter-order`);
+      if (catSel) catSel.value = `all`;
+      if (prepSel) prepSel.value = `all`;
+      if (ordSel) ordSel.value = `shuffled`;
+
+      rebuildActivePool(false);
+      rebuildFlashcardDeck(false);
+      updateHeaderStats();
+      switchMode(appState.mode);
+      saveState();
+    }
+
+    document.addEventListener(`keydown`, (ev) => {
+      const tag = ev.target && ev.target.tagName ? ev.target.tagName.toLowerCase() : ``;
+      if (tag === `select` || tag === `input`) return;
+
+      if (appState.mode === `quiz`) {
+        const keyMap = { '1': `der`, '2': `die`, '3': `das`, '4': `den`, '5': `dem`, '6': `des` };
+        if (keyMap[ev.key]) {
+          selectAnswer(keyMap[ev.key]);
+        } else if (ev.key === `Enter` && currentQuestionAnswered) {
+          ev.preventDefault();
+          nextQuestion();
+        }
+      } else if (appState.mode === `flashcards`) {
+        if (ev.key === ` `) {
+          ev.preventDefault();
+          flipFlashcard();
+        } else if (ev.key === `ArrowRight`) {
+          nextFlashcard();
+        } else if (ev.key === `ArrowLeft`) {
+          prevFlashcard();
+        }
+      }
+    });
+
+    // =========================================================================
+    // 9. INITIALISATION WITH NOTEBOOK SHIM API
+    // =========================================================================
+    async function initApp() {
+      populatePrepDropdown();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            appState = Object.assign({}, DEFAULT_STATE, saved);
+            if (!appState.answeredIds) appState.answeredIds = {};
+            if (!appState.wrongIds) appState.wrongIds = [];
+            if (!appState.fcStatus) appState.fcStatus = {};
+          }
+        } catch (e) {
+          // Proceed cleanly with default state
+        }
+      }
+
+      const catSel = document.getElementById(`filter-category`);
+      const prepSel = document.getElementById(`filter-prep`);
+      const ordSel = document.getElementById(`filter-order`);
+      if (catSel) catSel.value = appState.category;
+      if (prepSel) prepSel.value = appState.prep;
+      if (ordSel) ordSel.value = appState.order;
+
+      rebuildActivePool(true);
+      rebuildFlashcardDeck(true);
+      updateHeaderStats();
+      switchMode(appState.mode === `flashcards` ? `flashcards` : `quiz`);
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    initApp();
+  </script>
+</body>
+</html>

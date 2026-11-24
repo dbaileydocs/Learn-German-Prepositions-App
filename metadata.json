@@ -1,0 +1,6 @@
+{
+  "name": "Deutsche Präpositionen",
+  "description": "Interactive A1–A2 German prepositions practice with 1,000 curated sentences, active-recall flashcards, and a complete case & declension grammar guide.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
